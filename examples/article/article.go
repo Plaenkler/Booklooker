@@ -18,19 +18,22 @@ func main() {
 		return
 	}
 	if authResp.Status != "OK" {
-		log.Println(authResp.ReturnValue)
+		log.Println("Status:", authResp.Status)
+		log.Println("Return:", authResp.ReturnValue)
 		return
 	}
 	token := authResp.ReturnValue
+	log.Println("Token:", token)
 
-	//
+	// Delete an article
 	req := models.ArticleRequest{
 		OrderNo: "123",
 	}
 
-	resp, err := handler.DeleteArticle(token, req)
+	articleResp, err := handler.DeleteArticle(token, req)
 	if err != nil {
 		log.Fatalf("failed to delete article: %v", err)
 	}
-	log.Println("Article Deletion Status:", resp.Status)
+	log.Println("Status:", articleResp.Status)
+	log.Println("Return:", articleResp.ReturnValue)
 }

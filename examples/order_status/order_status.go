@@ -18,10 +18,12 @@ func main() {
 		return
 	}
 	if authResp.Status != "OK" {
-		log.Println(authResp.ReturnValue)
+		log.Println("Status:", authResp.Status)
+		log.Println("Return:", authResp.ReturnValue)
 		return
 	}
 	token := authResp.ReturnValue
+	log.Println("Token:", token)
 
 	// Set the order status
 	req := models.OrderStatusRequest{

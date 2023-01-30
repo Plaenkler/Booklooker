@@ -18,10 +18,12 @@ func main() {
 		return
 	}
 	if authResp.Status != "OK" {
-		log.Println(authResp.ReturnValue)
+		log.Println("Status:", authResp.Status)
+		log.Println("Return:", authResp.ReturnValue)
 		return
 	}
 	token := authResp.ReturnValue
+	log.Println("Token:", token)
 
 	// Cancel an order item
 	req := &models.OrderItemCancelRequest{
