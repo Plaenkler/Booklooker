@@ -9,7 +9,7 @@ import (
 	"github.com/plaenkler/booklooker/api/models"
 )
 
-func SetOrderStatus(token string, req models.OrderStatusRequest) (*models.GeneralResponse, error) {
+func SetOrderStatus(token string, req models.OrderStatusRequest) (*models.GlobalResponse, error) {
 	url := baseURL + models.OrderStatusPath + "?token=" + token
 	jsonReq, err := json.Marshal(req)
 	if err != nil {
@@ -30,7 +30,7 @@ func SetOrderStatus(token string, req models.OrderStatusRequest) (*models.Genera
 	if err != nil {
 		return nil, err
 	}
-	var orderStatusResp models.GeneralResponse
+	var orderStatusResp models.GlobalResponse
 	err = json.Unmarshal(jsonResp, &orderStatusResp)
 	if err != nil {
 		return nil, err

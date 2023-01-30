@@ -10,7 +10,7 @@ import (
 	"github.com/plaenkler/booklooker/api/models"
 )
 
-func GetArticleList(token string, req models.ArticleListRequest) (*models.GeneralResponse, error) {
+func GetArticleList(token string, req models.ArticleListRequest) (*models.GlobalResponse, error) {
 	params := url.Values{}
 	if !reflect.ValueOf(req.MediaType).IsZero() {
 		params.Set("mediaType", string(req.MediaType))
@@ -36,7 +36,7 @@ func GetArticleList(token string, req models.ArticleListRequest) (*models.Genera
 	if err != nil {
 		return nil, err
 	}
-	var articleListResp models.GeneralResponse
+	var articleListResp models.GlobalResponse
 	err = json.Unmarshal(jsonResp, &articleListResp)
 	if err != nil {
 		return nil, err

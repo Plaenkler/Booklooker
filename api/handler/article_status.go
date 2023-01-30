@@ -8,7 +8,7 @@ import (
 	"github.com/plaenkler/booklooker/api/models"
 )
 
-func GetArticleStatus(token string, req models.ArticleStatusRequest) (*models.GeneralResponse, error) {
+func GetArticleStatus(token string, req models.ArticleStatusRequest) (*models.GlobalResponse, error) {
 	url := baseURL + models.ArticleStatusPath + "?token=" + token + "&orderNo=" + req.OrderNo
 	resp, err := http.Get(url)
 	if err != nil {
@@ -19,7 +19,7 @@ func GetArticleStatus(token string, req models.ArticleStatusRequest) (*models.Ge
 	if err != nil {
 		return nil, err
 	}
-	var articleStatusResp models.GeneralResponse
+	var articleStatusResp models.GlobalResponse
 	err = json.Unmarshal(jsonResp, &articleStatusResp)
 	if err != nil {
 		return nil, err

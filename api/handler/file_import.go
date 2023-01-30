@@ -9,7 +9,7 @@ import (
 	"github.com/plaenkler/booklooker/api/models"
 )
 
-func ImportFile(token string, req models.FileImportRequest) (*models.GeneralResponse, error) {
+func ImportFile(token string, req models.FileImportRequest) (*models.GlobalResponse, error) {
 	url := baseURL + models.FileImportPath + "?token=" + token
 	jsonReq, err := json.Marshal(req)
 	if err != nil {
@@ -24,7 +24,7 @@ func ImportFile(token string, req models.FileImportRequest) (*models.GeneralResp
 	if err != nil {
 		return nil, err
 	}
-	var fileImportResp models.GeneralResponse
+	var fileImportResp models.GlobalResponse
 	err = json.Unmarshal(jsonResp, &fileImportResp)
 	if err != nil {
 		return nil, err
