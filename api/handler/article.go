@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"bytes"
 	"encoding/json"
 	"io"
 	"net/http"
@@ -10,12 +9,8 @@ import (
 )
 
 func DeleteArticle(token string, req models.ArticleRequest) (*models.ArticleResponse, error) {
-	url := baseURL + models.ArticlePath + "?token=" + token
-	jsonReq, err := json.Marshal(req)
-	if err != nil {
-		return nil, err
-	}
-	httpReq, err := http.NewRequest("DELETE", url, bytes.NewBuffer(jsonReq))
+	url := baseURL + models.ArticlePath + "?token=" + token + "&orderNo=" + req.OrderNo
+	httpReq, err := http.NewRequest("DELETE", url, nil)
 	if err != nil {
 		return nil, err
 	}

@@ -7,6 +7,6 @@ type ArticleRequest struct {
 }
 
 type ArticleResponse struct {
-	Status  string `json:"status"`
-	Message string `json:"message,omitempty"`
+	Status      string `json:"status"`
+	ReturnValue string `json:"returnValue,omitempty"`
 }
