@@ -5,20 +5,28 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"strconv"
+	"reflect"
 
 	"github.com/plaenkler/booklooker/api/models"
 )
 
 func GetArticleList(token string, req models.ArticleListRequest) (*models.ArticleListResponse, error) {
-	values := url.Values{}
-	values.Set("field", req.Field)
-	values.Set("showPrice", strconv.FormatBool(req.ShowPrice))
-	values.Set("showStock", strconv.FormatBool(req.ShowStock))
-	values.Set("mediaType", string(req.MediaType))
+	params := url.Values{}
+	if !reflect.ValueOf(req.MediaType).IsZero() {
+		params.Set("mediaType", string(req.MediaType))
 
-	url := baseURL + models.ArticleListPath + "?token=" + token + "&" + values.Encode()
-
+		// Can only be used if mediaType is present
+		if !reflect.ValueOf(req.ReturnType).IsZero() {
+			params.Set("field", req.ReturnType)
+		}
+	}
+	if !reflect.ValueOf(req.ShowPrice).IsZero() {
+		params.Set("showPrice", "1")
+	}
+	if !reflect.ValueOf(req.ShowStock).IsZero() {
+		params.Set("showStock", "1")
+	}
+	url := baseURL + models.ArticleListPath + "?token=" + token + "&" + params.Encode()
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err

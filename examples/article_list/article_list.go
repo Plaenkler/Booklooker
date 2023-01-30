@@ -25,16 +25,18 @@ func main() {
 	token := authResp.ReturnValue
 	log.Println("Token:", token)
 
-	//
+	// Download all active article numbers
 	req := models.ArticleListRequest{
-		Field:     "title",
-		ShowPrice: true,
-		ShowStock: false,
+		ReturnType: "isbn", // Possible values: orderNo, ISBN or EAN
+		ShowPrice:  true,
+		ShowStock:  true,
+		MediaType:  0, // Possible values: 0: Books, 1: Movies, 2: Music, 3: Audio books, 4: Games or n/a
 	}
 
-	resp, err := handler.GetArticleList(token, req)
+	articleListResp, err := handler.GetArticleList(token, req)
 	if err != nil {
 		log.Fatalf("failed to get article list: %v", err)
 	}
-	log.Println("Article List:", resp.ArticleList)
+	log.Println("Status:", articleListResp.Status)
+	log.Println("Return:", articleListResp.ReturnValue)
 }

@@ -27,7 +27,7 @@ func main() {
 
 	// Delete an article
 	req := models.ArticleRequest{
-		OrderNo: "123",
+		OrderNo: "Example123",
 	}
 
 	articleResp, err := handler.DeleteArticle(token, req)
