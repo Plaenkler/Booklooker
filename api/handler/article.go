@@ -10,7 +10,7 @@ import (
 
 func DeleteArticle(token string, req models.ArticleRequest) (*models.GlobalResponse, error) {
 	url := baseURL + models.ArticlePath + "?token=" + token + "&orderNo=" + req.OrderNo
-	httpReq, err := http.NewRequest("DELETE", url, nil)
+	httpReq, err := http.NewRequest(http.MethodDelete, url, nil)
 	if err != nil {
 		return nil, err
 	}

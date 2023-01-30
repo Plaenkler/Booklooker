@@ -15,7 +15,7 @@ func SetOrderStatus(token string, req models.OrderStatusRequest) (*models.Global
 	if err != nil {
 		return nil, err
 	}
-	httpReq, err := http.NewRequest("PUT", url, bytes.NewBuffer(jsonReq))
+	httpReq, err := http.NewRequest(http.MethodPut, url, bytes.NewBuffer(jsonReq))
 	if err != nil {
 		return nil, err
 	}

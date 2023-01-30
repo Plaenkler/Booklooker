@@ -15,7 +15,7 @@ func CancelOrder(token string, req models.OrderCancelRequest) (*models.GlobalRes
 	if err != nil {
 		return nil, err
 	}
-	httpReq, err := http.NewRequest("PUT", url, bytes.NewBuffer(jsonReq))
+	httpReq, err := http.NewRequest(http.MethodPut, url, bytes.NewBuffer(jsonReq))
 	if err != nil {
 		return nil, err
 	}
