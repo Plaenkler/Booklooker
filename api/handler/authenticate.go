@@ -8,7 +8,7 @@ import (
 	"github.com/plaenkler/booklooker/api/models"
 )
 
-func Authenticate(req models.AuthenticateRequest) (*models.AuthenticateResponse, error) {
+func Authenticate(req models.AuthenticateRequest) (*models.GeneralResponse, error) {
 	url := baseURL + models.AuthenticatePath + "?apiKey=" + req.APIKey
 	resp, err := http.Post(url, "application/json", nil)
 	if err != nil {
@@ -19,7 +19,7 @@ func Authenticate(req models.AuthenticateRequest) (*models.AuthenticateResponse,
 	if err != nil {
 		return nil, err
 	}
-	var authResp models.AuthenticateResponse
+	var authResp models.GeneralResponse
 	err = json.Unmarshal(jsonResp, &authResp)
 	if err != nil {
 		return nil, err

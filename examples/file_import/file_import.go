@@ -39,8 +39,8 @@ func main() {
 		log.Println(err)
 		return
 	}
-	if fileImportResp.Status != "success" {
-		log.Println(fileImportResp.Message)
+	if fileImportResp.Status != "OK" {
+		log.Println(fileImportResp.ReturnValue)
 		return
 	}
 }

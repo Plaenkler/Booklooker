@@ -25,13 +25,13 @@ func main() {
 	token := authResp.ReturnValue
 	log.Println("Token:", token)
 
-	//
-	req := models.ArticleStatusRequest{OrderNo: "order_no_value"}
-
-	resp, err := handler.GetArticleStatus(token, req)
+	// Query the status of an item
+	req := models.ArticleStatusRequest{OrderNo: "Order123"}
+	articleStatusResp, err := handler.GetArticleStatus(token, req)
 	if err != nil {
 		log.Println("error:", err)
 		return
 	}
-	log.Println("response:", resp)
+	log.Println("Status:", articleStatusResp.Status)
+	log.Println("Return:", articleStatusResp.ReturnValue)
 }

@@ -7,8 +7,3 @@ type OrderMessageRequest struct {
 	MessageType    string `json:"messageType"`
 	AdditionalText string `json:"additionalText,omitempty"`
 }
-
-type OrderMessageResponse struct {
-	Status  string `json:"status"`
-	Message string `json:"message,omitempty"`
-}

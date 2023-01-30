@@ -9,7 +9,7 @@ import (
 	"github.com/plaenkler/booklooker/api/models"
 )
 
-func PutOrderItemCancel(token string, req *models.OrderItemCancelRequest) (*models.OrderItemCancelResponse, error) {
+func PutOrderItemCancel(token string, req *models.OrderItemCancelRequest) (*models.GeneralResponse, error) {
 	url := baseURL + models.OrderItemCancelPath + "?token=" + token
 	jsonReq, err := json.Marshal(req)
 	if err != nil {
@@ -30,7 +30,7 @@ func PutOrderItemCancel(token string, req *models.OrderItemCancelRequest) (*mode
 	if err != nil {
 		return nil, err
 	}
-	var orderItemCancelResp models.OrderItemCancelResponse
+	var orderItemCancelResp models.GeneralResponse
 	err = json.Unmarshal(jsonResp, &orderItemCancelResp)
 	if err != nil {
 		return nil, err

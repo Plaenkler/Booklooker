@@ -8,7 +8,7 @@ import (
 	"github.com/plaenkler/booklooker/api/models"
 )
 
-func GetImportStatus(token string) (*models.ImportStatusResponse, error) {
+func GetImportStatus(token string) (*models.GeneralResponse, error) {
 	url := baseURL + models.ImportStatusPath + "?token=" + token
 	resp, err := http.Get(url)
 	if err != nil {
@@ -19,7 +19,7 @@ func GetImportStatus(token string) (*models.ImportStatusResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	var importStatusResp models.ImportStatusResponse
+	var importStatusResp models.GeneralResponse
 	err = json.Unmarshal(jsonResp, &importStatusResp)
 	if err != nil {
 		return nil, err

@@ -31,10 +31,10 @@ func main() {
 		MessageType:    "MESSAGE_TYPE",
 		AdditionalText: "ADDITIONAL_TEXT",
 	}
-	resp, err := handler.PutOrderMessage(token, req)
+	orderMessageResp, err := handler.PutOrderMessage(token, req)
 	if err != nil {
 		log.Fatalln(err)
 	}
-	log.Println("Status:", resp.Status)
-	log.Println("Message:", resp.Message)
+	log.Println("Status:", orderMessageResp.Status)
+	log.Println("Return:", orderMessageResp.ReturnValue)
 }

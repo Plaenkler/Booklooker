@@ -30,10 +30,10 @@ func main() {
 		OrderID: "123",
 		Status:  "complete",
 	}
-	resp, err := handler.SetOrderStatus(token, req)
+	orderStatusResp, err := handler.SetOrderStatus(token, req)
 	if err != nil {
 		log.Println("Error:", err)
 		return
 	}
-	log.Println("Response:", resp)
+	log.Println("Response:", orderStatusResp)
 }

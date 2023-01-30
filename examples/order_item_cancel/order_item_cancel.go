@@ -27,7 +27,7 @@ func main() {
 
 	// Cancel an order item
 	req := &models.OrderItemCancelRequest{
-		OrderItemId: "order_item_id",
+		OrderItemID: "order_item_id",
 		MediaType:   1,
 	}
 	orderItemCancelResp, err := handler.PutOrderItemCancel(token, req)
@@ -35,8 +35,10 @@ func main() {
 		log.Println("Error:", err)
 		return
 	}
-	if orderItemCancelResp.Status != "success" {
-		log.Println(orderItemCancelResp.Message)
+	if orderItemCancelResp.Status != "OK" {
+		log.Println(orderItemCancelResp.ReturnValue)
 		return
 	}
+	log.Println("Status:", orderItemCancelResp.Status)
+	log.Println("Return:", orderItemCancelResp.ReturnValue)
 }

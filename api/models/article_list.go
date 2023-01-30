@@ -8,8 +8,3 @@ type ArticleListRequest struct {
 	ShowStock  bool   `json:"showStock"`
 	MediaType  byte   `json:"mediaType,omitempty"`
 }
-
-type ArticleListResponse struct {
-	Status      string `json:"status"`
-	ReturnValue string `json:"returnValue,omitempty"`
-}

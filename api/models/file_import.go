@@ -10,8 +10,3 @@ type FileImportRequest struct {
 	FormatID  int    `json:"formatId,omitempty"`
 	Encoding  string `json:"encoding,omitempty"`
 }
-
-type FileImportResponse struct {
-	Status  string `json:"status"`
-	Message string `json:"message,omitempty"`
-}

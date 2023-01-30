@@ -8,7 +8,7 @@ import (
 	"github.com/plaenkler/booklooker/api/models"
 )
 
-func DeleteArticle(token string, req models.ArticleRequest) (*models.ArticleResponse, error) {
+func DeleteArticle(token string, req models.ArticleRequest) (*models.GeneralResponse, error) {
 	url := baseURL + models.ArticlePath + "?token=" + token + "&orderNo=" + req.OrderNo
 	httpReq, err := http.NewRequest("DELETE", url, nil)
 	if err != nil {
@@ -25,7 +25,7 @@ func DeleteArticle(token string, req models.ArticleRequest) (*models.ArticleResp
 	if err != nil {
 		return nil, err
 	}
-	var articleResp models.ArticleResponse
+	var articleResp models.GeneralResponse
 	err = json.Unmarshal(jsonResp, &articleResp)
 	if err != nil {
 		return nil, err
