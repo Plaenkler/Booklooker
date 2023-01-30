@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/plaenkler/booklooker/api/handler"
@@ -15,14 +14,14 @@ func main() {
 	}
 	authResp, err := handler.Authenticate(authReq)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return
 	}
-	if authResp.Status != "success" {
-		fmt.Println(authResp.Message)
+	if authResp.Status != "OK" {
+		log.Println(authResp.ReturnValue)
 		return
 	}
-	token := authResp.Token
+	token := authResp.ReturnValue
 
 	// Send a message to the customer
 	req := models.OrderMessageRequest{
@@ -34,6 +33,6 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	fmt.Println("Status:", resp.Status)
-	fmt.Println("Message:", resp.Message)
+	log.Println("Status:", resp.Status)
+	log.Println("Message:", resp.Message)
 }

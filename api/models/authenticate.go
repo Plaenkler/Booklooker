@@ -8,7 +8,6 @@ type AuthenticateRequest struct {
 }
 
 type AuthenticateResponse struct {
-	Status  string `json:"status"`
-	Message string `json:"message,omitempty"`
-	Token   string `json:"token,omitempty"`
+	Status      string `json:"status"`
+	ReturnValue string `json:"returnValue,omitempty"`
 }

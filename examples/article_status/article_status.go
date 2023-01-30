@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/plaenkler/booklooker/api/handler"
 	"github.com/plaenkler/booklooker/api/models"
@@ -14,22 +14,22 @@ func main() {
 	}
 	authResp, err := handler.Authenticate(authReq)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return
 	}
-	if authResp.Status != "success" {
-		fmt.Println(authResp.Message)
+	if authResp.Status != "OK" {
+		log.Println(authResp.ReturnValue)
 		return
 	}
-	token := authResp.Token
+	token := authResp.ReturnValue
 
 	//
 	req := models.ArticleStatusRequest{OrderNo: "order_no_value"}
 
 	resp, err := handler.GetArticleStatus(token, req)
 	if err != nil {
-		fmt.Println("error:", err)
+		log.Println("error:", err)
 		return
 	}
-	fmt.Println("response:", resp)
+	log.Println("response:", resp)
 }

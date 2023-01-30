@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/plaenkler/booklooker/api/handler"
@@ -15,14 +14,14 @@ func main() {
 	}
 	authResp, err := handler.Authenticate(authReq)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return
 	}
-	if authResp.Status != "success" {
-		fmt.Println(authResp.Message)
+	if authResp.Status != "OK" {
+		log.Println(authResp.ReturnValue)
 		return
 	}
-	token := authResp.Token
+	token := authResp.ReturnValue
 
 	//
 	req := models.ArticleRequest{
@@ -33,5 +32,5 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to delete article: %v", err)
 	}
-	fmt.Println("Article Deletion Status:", resp.Status)
+	log.Println("Article Deletion Status:", resp.Status)
 }

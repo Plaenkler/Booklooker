@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/plaenkler/booklooker/api/handler"
 	"github.com/plaenkler/booklooker/api/models"
@@ -14,14 +14,14 @@ func main() {
 	}
 	authResp, err := handler.Authenticate(authReq)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return
 	}
-	if authResp.Status != "success" {
-		fmt.Println(authResp.Message)
+	if authResp.Status != "OK" {
+		log.Println(authResp.ReturnValue)
 		return
 	}
-	token := authResp.Token
+	token := authResp.ReturnValue
 
 	// Import a file
 	file := []byte("your file content")
@@ -34,11 +34,11 @@ func main() {
 	}
 	fileImportResp, err := handler.ImportFile(token, fileImportReq)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return
 	}
 	if fileImportResp.Status != "success" {
-		fmt.Println(fileImportResp.Message)
+		log.Println(fileImportResp.Message)
 		return
 	}
 }

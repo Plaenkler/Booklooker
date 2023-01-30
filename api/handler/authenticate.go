@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"bytes"
 	"encoding/json"
 	"io"
 	"net/http"
@@ -10,12 +9,8 @@ import (
 )
 
 func Authenticate(req models.AuthenticateRequest) (*models.AuthenticateResponse, error) {
-	url := baseURL + models.AuthenticatePath
-	jsonReq, err := json.Marshal(req)
-	if err != nil {
-		return nil, err
-	}
-	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonReq))
+	url := baseURL + models.AuthenticatePath + "?apiKey=" + req.APIKey
+	resp, err := http.Post(url, "application/json", nil)
 	if err != nil {
 		return nil, err
 	}

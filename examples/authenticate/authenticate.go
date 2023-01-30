@@ -13,5 +13,6 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error authenticating: %v", err)
 	}
-	log.Println("Authentication response:", authResp)
+	log.Println("Status:", authResp.Status)
+	log.Println("Return:", authResp.ReturnValue)
 }

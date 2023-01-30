@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/plaenkler/booklooker/api/handler"
 	"github.com/plaenkler/booklooker/api/models"
@@ -14,14 +14,14 @@ func main() {
 	}
 	authResp, err := handler.Authenticate(authReq)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return
 	}
-	if authResp.Status != "success" {
-		fmt.Println(authResp.Message)
+	if authResp.Status != "OK" {
+		log.Println(authResp.ReturnValue)
 		return
 	}
-	token := authResp.Token
+	token := authResp.ReturnValue
 
 	// Cancel an order
 	req := models.OrderCancelRequest{
@@ -30,9 +30,9 @@ func main() {
 
 	orderCancelResp, err := handler.CancelOrder(token, req)
 	if err != nil {
-		fmt.Println("Error cancelling order:", err)
+		log.Println("Error cancelling order:", err)
 		return
 	}
 
-	fmt.Println("Order cancel response:", orderCancelResp)
+	log.Println("Order cancel response:", orderCancelResp)
 }
