@@ -1,7 +1,7 @@
 package client
 
 import (
-	"log"
+	"fmt"
 	"time"
 
 	"github.com/plaenkler/booklooker/handler"
@@ -14,32 +14,32 @@ type Client struct {
 	active bool
 }
 
-func (c *Client) Start() {
+func (c *Client) Start() error {
 	c.active = true
-	done := make(chan bool)
+	done := make(chan error)
 	go func() {
 		for c.active {
 			req := model.AuthenticateRequest{
 				APIKey: c.APIKey,
 			}
 			resp, err := handler.Authenticate(req)
-			// TODO: Find a better way to handle errors
 			if err != nil {
-				log.Printf("client-1-error: %s", err)
+				done <- fmt.Errorf("client-1-error: %s", err)
+				return
 			}
 			if resp.Status != "OK" {
-				log.Printf("client-2-error: %s", resp.Status)
+				done <- fmt.Errorf("client-2-error: %s", resp.Status)
+				return
 			}
-			// TODO: Do not save values if error occured
 			c.Token = model.Token{
 				Value:  resp.ReturnValue,
 				Expiry: time.Now().Add(10 * time.Minute),
 			}
-			done <- true
+			done <- nil
 			time.Sleep(9 * time.Minute)
 		}
 	}()
-	<-done
+	return <-done
 }
 
 func (c *Client) Stop() {
