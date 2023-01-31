@@ -5,11 +5,11 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/plaenkler/booklooker/api/models"
+	"github.com/plaenkler/booklooker/model"
 )
 
-func GetFileStatus(token string, req models.FileStatusRequest) (*models.GlobalResponse, error) {
-	url := baseURL + models.FileStatusPath + "?token=" + token + "&filename=" + req.Filename
+func GetFileStatus(token model.Token, req model.FileStatusRequest) (*model.GlobalResponse, error) {
+	url := model.BaseURL + model.FileStatusPath + "?token=" + token.Value + "&filename=" + req.Filename
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
@@ -19,7 +19,7 @@ func GetFileStatus(token string, req models.FileStatusRequest) (*models.GlobalRe
 	if err != nil {
 		return nil, err
 	}
-	var fileStatusResp models.GlobalResponse
+	var fileStatusResp model.GlobalResponse
 	err = json.Unmarshal(jsonResp, &fileStatusResp)
 	if err != nil {
 		return nil, err

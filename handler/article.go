@@ -5,11 +5,11 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/plaenkler/booklooker/api/models"
+	"github.com/plaenkler/booklooker/model"
 )
 
-func DeleteArticle(token string, req models.ArticleRequest) (*models.GlobalResponse, error) {
-	url := baseURL + models.ArticlePath + "?token=" + token + "&orderNo=" + req.OrderNo
+func DeleteArticle(token model.Token, req model.ArticleRequest) (*model.GlobalResponse, error) {
+	url := model.BaseURL + model.ArticlePath + "?token=" + token.Value + "&orderNo=" + req.OrderNo
 	httpReq, err := http.NewRequest(http.MethodDelete, url, nil)
 	if err != nil {
 		return nil, err
@@ -25,7 +25,7 @@ func DeleteArticle(token string, req models.ArticleRequest) (*models.GlobalRespo
 	if err != nil {
 		return nil, err
 	}
-	var articleResp models.GlobalResponse
+	var articleResp model.GlobalResponse
 	err = json.Unmarshal(jsonResp, &articleResp)
 	if err != nil {
 		return nil, err

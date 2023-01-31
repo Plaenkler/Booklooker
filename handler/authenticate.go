@@ -5,11 +5,11 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/plaenkler/booklooker/api/models"
+	"github.com/plaenkler/booklooker/model"
 )
 
-func Authenticate(req models.AuthenticateRequest) (*models.GlobalResponse, error) {
-	url := baseURL + models.AuthenticatePath + "?apiKey=" + req.APIKey
+func Authenticate(req model.AuthenticateRequest) (*model.GlobalResponse, error) {
+	url := model.BaseURL + model.AuthenticatePath + "?apiKey=" + req.APIKey
 	resp, err := http.Post(url, "application/json", nil)
 	if err != nil {
 		return nil, err
@@ -19,7 +19,7 @@ func Authenticate(req models.AuthenticateRequest) (*models.GlobalResponse, error
 	if err != nil {
 		return nil, err
 	}
-	var authResp models.GlobalResponse
+	var authResp model.GlobalResponse
 	err = json.Unmarshal(jsonResp, &authResp)
 	if err != nil {
 		return nil, err

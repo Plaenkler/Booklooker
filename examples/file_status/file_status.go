@@ -3,30 +3,19 @@ package main
 import (
 	"log"
 
-	"github.com/plaenkler/booklooker/api/handler"
-	"github.com/plaenkler/booklooker/api/models"
+	"github.com/plaenkler/booklooker/client"
+	"github.com/plaenkler/booklooker/handler"
+	"github.com/plaenkler/booklooker/model"
 )
 
 func main() {
-	// Authenticate to obtain a token
-	authReq := models.AuthenticateRequest{
-		APIKey: "your_api_key",
-	}
-	authResp, err := handler.Authenticate(authReq)
-	if err != nil {
-		log.Println(err)
-		return
-	}
-	if authResp.Status != "OK" {
-		log.Println("Status:", authResp.Status)
-		log.Println("Return:", authResp.ReturnValue)
-		return
-	}
-	token := authResp.ReturnValue
-	log.Println("Token:", token)
+	// Create a new client
+	c := client.Client{APIKey: "YOUR_API_KEY"}
+	c.Start()
+	defer c.Stop()
 
 	// Get file status
-	fileStatusResp, err := handler.GetFileStatus(token, models.FileStatusRequest{Filename: "your_filename"})
+	fileStatusResp, err := handler.GetFileStatus(c.Token, model.FileStatusRequest{Filename: "your_filename"})
 	if err != nil {
 		log.Fatalf("error getting file status: %v", err)
 	}

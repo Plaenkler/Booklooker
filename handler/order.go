@@ -5,11 +5,11 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/plaenkler/booklooker/api/models"
+	"github.com/plaenkler/booklooker/model"
 )
 
-func GetOrder(token string, req models.OrderRequest) (*models.OrderResponse, error) {
-	url := baseURL + models.OrderPath + "?token=" + token
+func GetOrder(token model.Token, req model.OrderRequest) (*model.OrderResponse, error) {
+	url := model.BaseURL + model.OrderPath + "?token=" + token.Value
 
 	query := url + "&orderId=" + req.OrderID
 	if req.Date != "" {
@@ -31,7 +31,7 @@ func GetOrder(token string, req models.OrderRequest) (*models.OrderResponse, err
 	if err != nil {
 		return nil, err
 	}
-	var orderResp models.OrderResponse
+	var orderResp model.OrderResponse
 	err = json.Unmarshal(jsonResp, &orderResp)
 	if err != nil {
 		return nil, err

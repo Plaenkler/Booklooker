@@ -1,6 +1,10 @@
-package models
+package model
 
-// API endpoints
+import "time"
+
+const BaseURL = "https://api.booklooker.de/2.0/"
+
+// Endpoints
 const (
 	ArticleListPath     = "article_list"
 	ArticleStatusPath   = "article_status"
@@ -15,6 +19,12 @@ const (
 	OrderStatusPath     = "order_status"
 	OrderPath           = "order"
 )
+
+// Tokens have a lifetime of 10 minutes
+type Token struct {
+	Value  string `json:"token"`
+	Expiry time.Time
+}
 
 // Request models
 type ArticleListRequest struct {
@@ -82,7 +92,7 @@ type OrderResponse struct {
 	// TODO: Add Order struct
 }
 
-// Implemented from many endpoints
+// Implemented by most endpoints
 type GlobalResponse struct {
 	Status      string `json:"status"`
 	ReturnValue string `json:"returnValue,omitempty"`

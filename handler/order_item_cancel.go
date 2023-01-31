@@ -6,21 +6,21 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/plaenkler/booklooker/api/models"
+	"github.com/plaenkler/booklooker/model"
 )
 
-func CancelOrder(token string, req models.OrderCancelRequest) (*models.GlobalResponse, error) {
-	url := baseURL + models.OrderCancelPath + "?token=" + token
+func PutOrderItemCancel(token model.Token, req *model.OrderItemCancelRequest) (*model.GlobalResponse, error) {
+	url := model.BaseURL + model.OrderItemCancelPath + "?token=" + token.Value
 	jsonReq, err := json.Marshal(req)
 	if err != nil {
 		return nil, err
 	}
+	client := &http.Client{}
 	httpReq, err := http.NewRequest(http.MethodPut, url, bytes.NewBuffer(jsonReq))
 	if err != nil {
 		return nil, err
 	}
 	httpReq.Header.Set("Content-Type", "application/json")
-	client := &http.Client{}
 	resp, err := client.Do(httpReq)
 	if err != nil {
 		return nil, err
@@ -30,10 +30,10 @@ func CancelOrder(token string, req models.OrderCancelRequest) (*models.GlobalRes
 	if err != nil {
 		return nil, err
 	}
-	var orderCancelResp models.GlobalResponse
-	err = json.Unmarshal(jsonResp, &orderCancelResp)
+	var orderItemCancelResp model.GlobalResponse
+	err = json.Unmarshal(jsonResp, &orderItemCancelResp)
 	if err != nil {
 		return nil, err
 	}
-	return &orderCancelResp, nil
+	return &orderItemCancelResp, nil
 }
