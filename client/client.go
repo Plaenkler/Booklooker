@@ -23,9 +23,14 @@ func (c *Client) Start() {
 				APIKey: c.APIKey,
 			}
 			resp, err := handler.Authenticate(req)
-			if err != nil || resp.Status != "OK" {
-				log.Printf("token-renewal-failed: %s", resp.ReturnValue)
+			// TODO: Find a better way to handle errors
+			if err != nil {
+				log.Printf("client-1-error: %s", err)
 			}
+			if resp.Status != "OK" {
+				log.Printf("client-2-error: %s", resp.Status)
+			}
+			// TODO: Do not save values if error occured
 			c.Token = model.Token{
 				Value:  resp.ReturnValue,
 				Expiry: time.Now().Add(10 * time.Minute),
