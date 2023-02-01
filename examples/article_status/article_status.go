@@ -11,11 +11,14 @@ import (
 func main() {
 	// Create a new client
 	c := client.Client{APIKey: "YOUR_API_KEY"}
-	c.Start()
+	err := c.Start()
+	if err != nil {
+		log.Fatalf("failed to start client: %v", err)
+	}
 	defer c.Stop()
 
 	// Query the status of an item
-	req := model.ArticleStatusRequest{OrderNo: "Order123"}
+	req := model.ArticleStatusRequest{OrderNo: "YOUR_ORDER_NUMBER"}
 	articleStatusResp, err := handler.GetArticleStatus(c.Token, req)
 	if err != nil {
 		log.Println("error:", err)

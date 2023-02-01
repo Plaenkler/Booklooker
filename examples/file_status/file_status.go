@@ -11,13 +11,17 @@ import (
 func main() {
 	// Create a new client
 	c := client.Client{APIKey: "YOUR_API_KEY"}
-	c.Start()
+	err := c.Start()
+	if err != nil {
+		log.Fatalf("failed to start client: %v", err)
+	}
 	defer c.Stop()
 
 	// Get file status
-	fileStatusResp, err := handler.GetFileStatus(c.Token, model.FileStatusRequest{Filename: "your_filename"})
+	fileStatusResp, err := handler.GetFileStatus(c.Token, model.FileStatusRequest{Filename: "YOUR_FILE_NAME"})
 	if err != nil {
 		log.Fatalf("error getting file status: %v", err)
 	}
-	log.Println("file status:", fileStatusResp.Status)
+	log.Println("Status:", fileStatusResp.Status)
+	log.Println("Return:", fileStatusResp.ReturnValue)
 }

@@ -11,7 +11,10 @@ import (
 func main() {
 	// Create a new client
 	c := client.Client{APIKey: "YOUR_API_KEY"}
-	c.Start()
+	err := c.Start()
+	if err != nil {
+		log.Fatalf("failed to start client: %v", err)
+	}
 	defer c.Stop()
 
 	// Set the order status

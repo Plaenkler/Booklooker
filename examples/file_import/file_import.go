@@ -11,17 +11,20 @@ import (
 func main() {
 	// Create a new client
 	c := client.Client{APIKey: "YOUR_API_KEY"}
-	c.Start()
+	err := c.Start()
+	if err != nil {
+		log.Fatalf("failed to start client: %v", err)
+	}
 	defer c.Stop()
 
 	// Import a file
-	file := []byte("your file content")
+	file := []byte("YOUR_FILE_CONTENT")
 	fileImportReq := model.FileImportRequest{
 		File:     file,
-		FileType: "your file type",
+		FileType: "YOUR_FILE_TYPE",
 		DataType: 1,
 		FormatID: 123,
-		Encoding: "your encoding",
+		Encoding: "YOUR_FILE_ENCODING",
 	}
 	fileImportResp, err := handler.ImportFile(c.Token, fileImportReq)
 	if err != nil {

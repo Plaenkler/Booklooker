@@ -12,7 +12,7 @@ func main() {
 	req := model.AuthenticateRequest{APIKey: "YOUR_API_KEY"}
 	authResp, err := handler.Authenticate(req)
 	if err != nil {
-		log.Fatalf("Error authenticating: %v", err)
+		log.Fatalf("error authenticating: %v", err)
 	}
 	log.Println("Status:", authResp.Status)
 	log.Println("Return:", authResp.ReturnValue)
