@@ -24,11 +24,11 @@ func (c *Client) Start() error {
 			}
 			resp, err := handler.Authenticate(req)
 			if err != nil {
-				done <- fmt.Errorf("client-1-error: %s", err)
+				done <- fmt.Errorf("client-error-1: %s", err)
 				return
 			}
 			if resp.Status != "OK" {
-				done <- fmt.Errorf("client-2-error: %s", resp.Status)
+				done <- fmt.Errorf("client-error-2: %s", resp.ReturnValue)
 				return
 			}
 			c.Token = model.Token{
