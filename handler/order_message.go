@@ -1,26 +1,35 @@
 package handler
 
 import (
-	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
+	"net/url"
+	"reflect"
 
 	"github.com/plaenkler/booklooker/model"
 )
 
 func PutOrderMessage(token model.Token, req model.OrderMessageRequest) (*model.GlobalResponse, error) {
-	url := model.BaseURL + model.OrderMessagePath + "?token=" + token.Value
-	jsonReq, err := json.Marshal(req)
+	params := url.Values{}
+	if reflect.ValueOf(req.OrderID).IsZero() {
+		return nil, fmt.Errorf("orderId is not valid")
+	}
+	if reflect.ValueOf(req.MessageType).IsZero() {
+		return nil, fmt.Errorf("messageType is not set")
+	}
+	if !reflect.ValueOf(req.AdditionalText).IsZero() {
+		params.Set("additionalText", req.AdditionalText)
+	}
+	params.Set("orderId", req.OrderID)
+	params.Set("messageType", req.MessageType)
+	url := model.BaseURL + model.OrderMessagePath + "?token=" + token.Value + "&" + params.Encode()
+	httpReq, err := http.NewRequest(http.MethodPut, url, nil)
 	if err != nil {
 		return nil, err
 	}
 	client := &http.Client{}
-	httpReq, err := http.NewRequest(http.MethodPut, url, bytes.NewBuffer(jsonReq))
-	if err != nil {
-		return nil, err
-	}
-	httpReq.Header.Set("Content-Type", "application/json")
 	resp, err := client.Do(httpReq)
 	if err != nil {
 		return nil, err

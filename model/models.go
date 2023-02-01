@@ -65,7 +65,7 @@ type OrderCancelRequest struct {
 
 type OrderItemCancelRequest struct {
 	OrderItemID string `json:"orderItemId"`
-	MediaType   byte   `json:"mediaType"`
+	MediaType   string `json:"mediaType"`
 }
 
 type OrderMessageRequest struct {
@@ -88,8 +88,8 @@ type OrderRequest struct {
 
 // Response models
 type OrderResponse struct {
-	Status string `json:"status"`
-	// TODO: Add Order struct
+	Status      string   `json:"status"`
+	ReturnValue []string `json:"returnValue,omitempty"`
 }
 
 // Implemented by most endpoints

@@ -14,7 +14,6 @@ func DeleteArticle(token model.Token, req model.ArticleRequest) (*model.GlobalRe
 	if err != nil {
 		return nil, err
 	}
-	httpReq.Header.Set("Content-Type", "application/json")
 	client := &http.Client{}
 	resp, err := client.Do(httpReq)
 	if err != nil {

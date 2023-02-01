@@ -27,6 +27,6 @@ func main() {
 		log.Println("Error cancelling order:", err)
 		return
 	}
-
-	log.Println("Order cancel response:", orderCancelResp)
+	log.Println("Status:", orderCancelResp.Status)
+	log.Println("Status:", orderCancelResp.ReturnValue)
 }

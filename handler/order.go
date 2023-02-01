@@ -2,27 +2,32 @@ package handler
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
+	"net/url"
+	"reflect"
 
 	"github.com/plaenkler/booklooker/model"
 )
 
 func GetOrder(token model.Token, req model.OrderRequest) (*model.OrderResponse, error) {
-	url := model.BaseURL + model.OrderPath + "?token=" + token.Value
-
-	query := url + "&orderId=" + req.OrderID
-	if req.Date != "" {
-		query = query + "&date=" + req.Date
+	params := url.Values{}
+	if reflect.ValueOf(req.OrderID).IsZero() {
+		return nil, fmt.Errorf("orderId is not set")
 	}
-	if req.DateFrom != "" {
-		query = query + "&dateFrom=" + req.DateFrom
+	if !reflect.ValueOf(req.Date).IsZero() {
+		params.Set("date", req.Date)
 	}
-	if req.DateTo != "" {
-		query = query + "&dateTo=" + req.DateTo
+	if !params.Has("date") {
+		if reflect.ValueOf(req.DateFrom).IsZero() || reflect.ValueOf(req.DateTo).IsZero() {
+			return nil, fmt.Errorf("time range not set")
+		}
+		params.Set("dateFrom", req.DateFrom)
+		params.Set("dateTo", req.DateTo)
 	}
-
-	resp, err := http.Get(query)
+	url := model.BaseURL + model.OrderPath + "?token=" + token.Value + "&" + params.Encode()
+	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
 	}

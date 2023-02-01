@@ -18,9 +18,9 @@ func main() {
 	defer c.Stop()
 
 	// Cancel an order item
-	req := &model.OrderItemCancelRequest{
-		OrderItemID: "order_item_id",
-		MediaType:   1,
+	req := model.OrderItemCancelRequest{
+		OrderItemID: "123", // Can only contain numbers
+		MediaType:   "0",   // Possible values: 0: Books, 1: Movies, 2: Music, 3: Audio books, 4: Games
 	}
 	orderItemCancelResp, err := handler.PutOrderItemCancel(c.Token, req)
 	if err != nil {

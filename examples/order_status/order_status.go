@@ -20,12 +20,13 @@ func main() {
 	// Set the order status
 	req := model.OrderStatusRequest{
 		OrderID: "123",
-		Status:  "complete",
+		Status:  "CANCELED", // See possible return values in the documentation
 	}
 	orderStatusResp, err := handler.SetOrderStatus(c.Token, req)
 	if err != nil {
 		log.Println("Error:", err)
 		return
 	}
-	log.Println("Response:", orderStatusResp)
+	log.Println("Status:", orderStatusResp.Status)
+	log.Println("Return:", orderStatusResp.ReturnValue)
 }

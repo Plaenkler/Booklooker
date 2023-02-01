@@ -19,10 +19,10 @@ func main() {
 
 	// Get orders for a specific date or time range
 	req := model.OrderRequest{
-		OrderID:  "123",
-		Date:     "2022-12-31",
-		DateFrom: "",
-		DateTo:   "",
+		OrderID:  "123",        // Can only contain numbers
+		Date:     "2023-02-01", // Will override DateFrom and DateTo
+		DateFrom: "2023-02-01",
+		DateTo:   "2023-02-02",
 	}
 
 	orderResp, err := handler.GetOrder(c.Token, req)
@@ -30,6 +30,6 @@ func main() {
 		log.Println("Error getting order:", err)
 		return
 	}
-
-	log.Println("Order response:", orderResp)
+	log.Println("Status:", orderResp.Status)
+	log.Println("Status:", orderResp.ReturnValue)
 }
