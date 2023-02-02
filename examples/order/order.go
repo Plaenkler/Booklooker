@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"log"
 
 	"github.com/plaenkler/booklooker/client"
@@ -27,9 +28,18 @@ func main() {
 
 	orderResp, err := handler.GetOrder(c.Token, req)
 	if err != nil {
-		log.Println("Error getting order:", err)
+		log.Printf("error getting order: %v", err)
 		return
 	}
-	log.Println("Status:", orderResp.Status)
-	log.Println("Status:", orderResp.ReturnValue)
+	if orderResp.Status != "OK" {
+		log.Fatalf("error getting orders: %v", orderResp.ReturnValue)
+	}
+	var orders []model.Order
+	err = json.Unmarshal([]byte(orderResp.ReturnValue), &orders)
+	if err != nil {
+		log.Println("error unmarshalling orders:", err)
+	}
+	for _, order := range orders {
+		log.Println(order)
+	}
 }

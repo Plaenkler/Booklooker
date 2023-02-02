@@ -11,7 +11,7 @@ import (
 	"github.com/plaenkler/booklooker/model"
 )
 
-func GetOrder(token model.Token, req model.OrderRequest) (*model.OrderResponse, error) {
+func GetOrder(token model.Token, req model.OrderRequest) (*model.GlobalResponse, error) {
 	params := url.Values{}
 	if reflect.ValueOf(req.OrderID).IsZero() {
 		return nil, fmt.Errorf("orderId is not set")
@@ -36,7 +36,7 @@ func GetOrder(token model.Token, req model.OrderRequest) (*model.OrderResponse, 
 	if err != nil {
 		return nil, err
 	}
-	var orderResp model.OrderResponse
+	var orderResp model.GlobalResponse
 	err = json.Unmarshal(jsonResp, &orderResp)
 	if err != nil {
 		return nil, err
