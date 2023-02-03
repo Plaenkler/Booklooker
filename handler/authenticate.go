@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 
@@ -9,6 +10,9 @@ import (
 )
 
 func Authenticate(req model.AuthenticateRequest) (*model.GlobalResponse, error) {
+	if req.APIKey == "" {
+		return nil, fmt.Errorf("apiKey is required")
+	}
 	url := model.BaseURL + model.AuthenticatePath + "?apiKey=" + req.APIKey
 	resp, err := http.Post(url, "application/json", nil)
 	if err != nil {

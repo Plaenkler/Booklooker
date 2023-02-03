@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 
@@ -9,6 +10,9 @@ import (
 )
 
 func GetFileStatus(token model.Token, req model.FileStatusRequest) (*model.GlobalResponse, error) {
+	if req.Filename == "" {
+		return nil, fmt.Errorf("filename is required")
+	}
 	url := model.BaseURL + model.FileStatusPath + "?token=" + token.Value + "&filename=" + req.Filename
 	resp, err := http.Get(url)
 	if err != nil {

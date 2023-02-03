@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 
@@ -9,6 +10,9 @@ import (
 )
 
 func DeleteArticle(token model.Token, req model.ArticleRequest) (*model.GlobalResponse, error) {
+	if req.OrderNo == "" {
+		return nil, fmt.Errorf("orderNo is required")
+	}
 	url := model.BaseURL + model.ArticlePath + "?token=" + token.Value + "&orderNo=" + req.OrderNo
 	httpReq, err := http.NewRequest(http.MethodDelete, url, nil)
 	if err != nil {

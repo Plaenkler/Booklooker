@@ -6,18 +6,17 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"reflect"
 
 	"github.com/plaenkler/booklooker/model"
 )
 
 func PutOrderItemCancel(token model.Token, req model.OrderItemCancelRequest) (*model.GlobalResponse, error) {
 	params := url.Values{}
-	if reflect.ValueOf(req.MediaType).IsZero() {
-		return nil, fmt.Errorf("mediaType is not valid")
+	if req.MediaType == "" {
+		return nil, fmt.Errorf("mediaType is required")
 	}
-	if reflect.ValueOf(req.OrderItemID).IsZero() {
-		return nil, fmt.Errorf("orderItemId is not set")
+	if req.OrderItemID == "" {
+		return nil, fmt.Errorf("orderItemId is required")
 	}
 	params.Set("mediaType", string(req.MediaType))
 	params.Set("orderItemId", req.OrderItemID)

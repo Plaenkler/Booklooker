@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 
@@ -9,6 +10,9 @@ import (
 )
 
 func CancelOrder(token model.Token, req model.OrderCancelRequest) (*model.GlobalResponse, error) {
+	if req.OrderID == "" {
+		return nil, fmt.Errorf("orderID is required")
+	}
 	url := model.BaseURL + model.OrderCancelPath + "?token=" + token.Value + "&orderId=" + req.OrderID
 	httpReq, err := http.NewRequest(http.MethodPut, url, nil)
 	if err != nil {
