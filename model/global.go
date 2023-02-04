@@ -21,12 +21,14 @@ const (
 )
 
 // Media types
+type MediaType int
+
 const (
-	MediaTypeBook      byte = iota
-	MediaTypeMovie     byte = iota
-	MediaTypeMusic     byte = iota
-	MediaTypeAudioBook byte = iota
-	MediaTypeGame      byte = iota
+	Books MediaType = iota
+	Movies
+	Music
+	AudioBooks
+	Games
 )
 
 // Tokens have a lifetime of 10 minutes
