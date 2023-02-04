@@ -5,11 +5,18 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"time"
 
 	"github.com/plaenkler/booklooker/model"
 )
 
 func GetFileStatus(token model.Token, req model.FileStatusRequest) (*model.GlobalResponse, error) {
+	if token.Value == "" {
+		return nil, fmt.Errorf("token has no value")
+	}
+	if token.Expiry.Before(time.Now()) {
+		return nil, fmt.Errorf("token has expired")
+	}
 	if req.Filename == "" {
 		return nil, fmt.Errorf("filename is required")
 	}

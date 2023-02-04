@@ -5,11 +5,18 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"time"
 
 	"github.com/plaenkler/booklooker/model"
 )
 
 func DeleteArticle(token model.Token, req model.ArticleRequest) (*model.GlobalResponse, error) {
+	if token.Value == "" {
+		return nil, fmt.Errorf("token has no value")
+	}
+	if token.Expiry.Before(time.Now()) {
+		return nil, fmt.Errorf("token has expired")
+	}
 	if req.OrderNo == "" {
 		return nil, fmt.Errorf("orderNo is required")
 	}

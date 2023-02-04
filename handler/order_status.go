@@ -6,17 +6,23 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"reflect"
+	"time"
 
 	"github.com/plaenkler/booklooker/model"
 )
 
 func SetOrderStatus(token model.Token, req model.OrderStatusRequest) (*model.GlobalResponse, error) {
+	if token.Value == "" {
+		return nil, fmt.Errorf("token has no value")
+	}
+	if token.Expiry.Before(time.Now()) {
+		return nil, fmt.Errorf("token has expired")
+	}
 	params := url.Values{}
-	if reflect.ValueOf(req.OrderID).IsZero() {
+	if req.OrderID == "" {
 		return nil, fmt.Errorf("orderId is not set")
 	}
-	if reflect.ValueOf(req.Status).IsZero() {
+	if req.Status == "" {
 		return nil, fmt.Errorf("status is not set")
 	}
 	params.Set("orderId", req.OrderID)

@@ -2,28 +2,35 @@ package handler
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"net/url"
-	"reflect"
+	"time"
 
 	"github.com/plaenkler/booklooker/model"
 )
 
 func GetArticleList(token model.Token, req model.ArticleListRequest) (*model.GlobalResponse, error) {
+	if token.Value == "" {
+		return nil, fmt.Errorf("token has no value")
+	}
+	if token.Expiry.Before(time.Now()) {
+		return nil, fmt.Errorf("token has expired")
+	}
 	params := url.Values{}
-	if !reflect.ValueOf(req.MediaType).IsZero() {
-		params.Set("mediaType", string(req.MediaType))
+	if req.MediaType != "" {
+		params.Set("mediaType", req.MediaType)
 
 		// Can only be used if mediaType is present
-		if !reflect.ValueOf(req.ReturnType).IsZero() {
+		if req.ReturnType != "" {
 			params.Set("field", req.ReturnType)
 		}
 	}
-	if !reflect.ValueOf(req.ShowPrice).IsZero() {
+	if req.ShowPrice {
 		params.Set("showPrice", "1")
 	}
-	if !reflect.ValueOf(req.ShowStock).IsZero() {
+	if req.ShowStock {
 		params.Set("showStock", "1")
 	}
 	url := model.BaseURL + model.ArticleListPath + "?token=" + token.Value + "&" + params.Encode()

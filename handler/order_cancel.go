@@ -5,11 +5,18 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"time"
 
 	"github.com/plaenkler/booklooker/model"
 )
 
 func CancelOrder(token model.Token, req model.OrderCancelRequest) (*model.GlobalResponse, error) {
+	if token.Value == "" {
+		return nil, fmt.Errorf("token has no value")
+	}
+	if token.Expiry.Before(time.Now()) {
+		return nil, fmt.Errorf("token has expired")
+	}
 	if req.OrderID == "" {
 		return nil, fmt.Errorf("orderID is required")
 	}

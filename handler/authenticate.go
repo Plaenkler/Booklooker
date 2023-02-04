@@ -14,7 +14,7 @@ func Authenticate(req model.AuthenticateRequest) (*model.GlobalResponse, error) 
 		return nil, fmt.Errorf("apiKey is required")
 	}
 	url := model.BaseURL + model.AuthenticatePath + "?apiKey=" + req.APIKey
-	resp, err := http.Post(url, "application/json", nil)
+	resp, err := http.Post(url, "", nil)
 	if err != nil {
 		return nil, err
 	}

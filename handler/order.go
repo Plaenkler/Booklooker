@@ -6,21 +6,27 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"reflect"
+	"time"
 
 	"github.com/plaenkler/booklooker/model"
 )
 
 func GetOrder(token model.Token, req model.OrderRequest) (*model.GlobalResponse, error) {
+	if token.Value == "" {
+		return nil, fmt.Errorf("token has no value")
+	}
+	if token.Expiry.Before(time.Now()) {
+		return nil, fmt.Errorf("token has expired")
+	}
 	params := url.Values{}
-	if reflect.ValueOf(req.OrderID).IsZero() {
+	if req.OrderID == "" {
 		return nil, fmt.Errorf("orderId is not set")
 	}
-	if !reflect.ValueOf(req.Date).IsZero() {
+	if req.Date != "" {
 		params.Set("date", req.Date)
 	}
 	if !params.Has("date") {
-		if reflect.ValueOf(req.DateFrom).IsZero() || reflect.ValueOf(req.DateTo).IsZero() {
+		if req.DateFrom == "" || req.DateTo == "" {
 			return nil, fmt.Errorf("time range not set")
 		}
 		params.Set("dateFrom", req.DateFrom)
