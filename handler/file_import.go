@@ -3,19 +3,60 @@ package handler
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
+	"mime/multipart"
 	"net/http"
+	"net/url"
+	"time"
 
 	"github.com/plaenkler/booklooker/model"
 )
 
 func ImportFile(token model.Token, req model.FileImportRequest) (*model.GlobalResponse, error) {
-	url := model.BaseURL + model.FileImportPath + "?token=" + token.Value
-	jsonReq, err := json.Marshal(req)
+	if token.Value == "" {
+		return nil, fmt.Errorf("token has no value")
+	}
+	if token.Expiry.Before(time.Now()) {
+		return nil, fmt.Errorf("token has expired")
+	}
+	params := url.Values{}
+	if req.File == nil {
+		return nil, fmt.Errorf("file is required")
+	}
+	if req.FileType != "" {
+		params.Set("fileType", req.FileType)
+	}
+	if req.MediaType != 0 {
+		params.Set("mediaType", fmt.Sprintf("%d", req.MediaType))
+	}
+	if req.DataType != 1 {
+		params.Set("dataType", fmt.Sprintf("%d", req.DataType))
+		fmt.Println(params)
+	}
+	if req.FormatID != "" {
+		params.Set("formatId", req.FormatID)
+	}
+	if req.Encoding != "" {
+		params.Set("encoding", req.Encoding)
+	}
+	url := model.BaseURL + model.FileImportPath + "?token=" + token.Value + "&" + params.Encode()
+	fmt.Println(url)
+	body := &bytes.Buffer{}
+	writer := multipart.NewWriter(body)
+	part, err := writer.CreateFormFile("file", req.File.Name())
 	if err != nil {
 		return nil, err
 	}
-	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonReq))
+	_, err = io.Copy(part, req.File)
+	if err != nil {
+		return nil, err
+	}
+	err = writer.Close()
+	if err != nil {
+		return nil, err
+	}
+	resp, err := http.Post(url, writer.FormDataContentType(), body)
 	if err != nil {
 		return nil, err
 	}
