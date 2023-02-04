@@ -19,8 +19,8 @@ func main() {
 
 	// Send a message to the customer
 	req := model.OrderMessageRequest{
-		OrderID:        "123",             // Can only contain numbers
-		MessageType:    "SHIPPING_NOTICE", // Possible: PAYMENT_INFORMATION, PAYMENT_REMINDER, SHIPPING_NOTICE
+		OrderID:        "123", // Can only contain numbers
+		MessageType:    model.ShippingNotice,
 		AdditionalText: "YOUR_ADDITIONAL_TEXT",
 	}
 	orderMessageResp, err := handler.PutOrderMessage(c.Token, req)

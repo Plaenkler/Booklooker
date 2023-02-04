@@ -4,9 +4,9 @@ import "os"
 
 type FileImportRequest struct {
 	File      *os.File
-	FileType  string
-	DataType  int
-	MediaType int
+	FileType  FileType
+	DataType  DataType
+	MediaType MediaType
 	FormatID  string
-	Encoding  string
+	Encoding  Encoding
 }

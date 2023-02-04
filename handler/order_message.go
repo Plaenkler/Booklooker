@@ -29,7 +29,7 @@ func PutOrderMessage(token model.Token, req model.OrderMessageRequest) (*model.G
 		params.Set("additionalText", req.AdditionalText)
 	}
 	params.Set("orderId", req.OrderID)
-	params.Set("messageType", req.MessageType)
+	params.Set("messageType", string(req.MessageType))
 	url := model.BaseURL + model.OrderMessagePath + "?token=" + token.Value + "&" + params.Encode()
 	httpReq, err := http.NewRequest(http.MethodPut, url, nil)
 	if err != nil {

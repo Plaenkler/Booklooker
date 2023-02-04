@@ -25,10 +25,10 @@ func main() {
 		return
 	}
 	fileImportReq := model.FileImportRequest{
-		File:      file,      // txt or zip file
-		FileType:  "article", // or "pic" for picture(s)
-		DataType:  1,         // 0: Add, change, delete, 1: Replace, 2: Delete
-		MediaType: 0,         // Possible values: 0: Books, 1: Movies, 2: Music, 3: Audio books, 4: Games
+		File:      file,        // txt or zip file
+		FileType:  "article",   // or "pic" for picture(s)
+		DataType:  1,           // 0: Add, change, delete, 1: Replace, 2: Delete
+		MediaType: model.Books, // Possible values: 0: Books, 1: Movies, 2: Music, 3: Audio books, 4: Games
 		// FormatID:  "BOOKLOOKER_FORMAT_ID", // Possible values not documented (expect n/a)
 		// Encoding:  "YOUR_FILE_ENCODING",   // Default ISO8859-1 / Latin1 (n/a), IBMPC/CR (CP437), macintosh (Mac OS Roman), UTF-8
 	}

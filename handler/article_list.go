@@ -20,7 +20,7 @@ func GetArticleList(token model.Token, req model.ArticleListRequest) (*model.Glo
 	}
 	params := url.Values{}
 	if req.MediaType != "" {
-		params.Set("mediaType", req.MediaType)
+		params.Set("mediaType", string(req.MediaType))
 
 		// Can only be used if mediaType is present
 		if req.ReturnType != "" {

@@ -22,7 +22,7 @@ func main() {
 		ReturnType: "isbn", // Possible values: orderNo, ISBN or EAN
 		ShowPrice:  true,
 		ShowStock:  true,
-		MediaType:  0, // Possible values: 0: Books, 1: Movies, 2: Music, 3: Audio books, 4: Games or n/a
+		MediaType:  model.Books, // Possible values: 0: Books, 1: Movies, 2: Music, 3: Audio books, 4: Games or n/a
 	}
 
 	articleListResp, err := handler.GetArticleList(c.Token, req)

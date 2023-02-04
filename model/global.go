@@ -20,15 +20,50 @@ const (
 	OrderPath           = "order"
 )
 
-// Media types
-type MediaType int
+// Encodings
+type Encoding string
 
 const (
-	Books MediaType = iota
-	Movies
-	Music
-	AudioBooks
-	Games
+	UTF8  Encoding = "UTF-8"
+	CP437 Encoding = "IBMPC/CR"
+	MacOS Encoding = "macintosh"
+)
+
+// Data types
+type DataType int
+
+const (
+	AddChangeDelete DataType = 0
+	Replace         DataType = 1
+	Delete          DataType = 2
+)
+
+// File types
+type FileType string
+
+const (
+	Article FileType = "article"
+	Picture FileType = "pic"
+)
+
+// Message types
+type MessageType string
+
+const (
+	PaymentInformation MessageType = "PAYMENT_INFORMATION"
+	PaymentReminder    MessageType = "PAYMENT_REMINDER"
+	ShippingNotice     MessageType = "SHIPPING_NOTICE"
+)
+
+// Media types
+type MediaType string
+
+const (
+	Books      MediaType = "0"
+	Movies     MediaType = "1"
+	Music      MediaType = "2"
+	AudioBooks MediaType = "3"
+	Games      MediaType = "4"
 )
 
 // Tokens have a lifetime of 10 minutes

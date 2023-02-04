@@ -25,10 +25,10 @@ func ImportFile(token model.Token, req model.FileImportRequest) (*model.GlobalRe
 		return nil, fmt.Errorf("file is required")
 	}
 	if req.FileType != "" {
-		params.Set("fileType", req.FileType)
+		params.Set("fileType", string(req.FileType))
 	}
-	if req.MediaType != 0 {
-		params.Set("mediaType", fmt.Sprintf("%d", req.MediaType))
+	if req.MediaType != "" {
+		params.Set("mediaType", string(req.MediaType))
 	}
 	if req.DataType != 1 {
 		params.Set("dataType", fmt.Sprintf("%d", req.DataType))
@@ -38,7 +38,7 @@ func ImportFile(token model.Token, req model.FileImportRequest) (*model.GlobalRe
 		params.Set("formatId", req.FormatID)
 	}
 	if req.Encoding != "" {
-		params.Set("encoding", req.Encoding)
+		params.Set("encoding", string(req.Encoding))
 	}
 	url := model.BaseURL + model.FileImportPath + "?token=" + token.Value + "&" + params.Encode()
 	fmt.Println(url)

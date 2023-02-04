@@ -18,7 +18,8 @@ func main() {
 	defer c.Stop()
 
 	// Get file status
-	fileStatusResp, err := handler.GetFileStatus(c.Token, model.FileStatusRequest{Filename: "YOUR_FILE_NAME"})
+	req := model.FileStatusRequest{Filename: "YOUR_FILE_NAME"}
+	fileStatusResp, err := handler.GetFileStatus(c.Token, req)
 	if err != nil {
 		log.Fatalf("error getting file status: %v", err)
 	}
