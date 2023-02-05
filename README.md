@@ -6,8 +6,6 @@
 
 Plaenkler/Booklooker enables HTTP requests to be made to the Booklooker API. The library abstracts the constructs and allows developers to interact with the Booklooker API through a convenient and intuitive interface.
 
-> **Note:** This project is still in development and is not yet ready for production.
-
 <table style="border:none;">
   <tr>
     <td><img src="https://mvz-bietigheim.de/wp-content/uploads/2017/10/placeholder-image4.jpg" width="480"/></td>
@@ -17,11 +15,9 @@ Plaenkler/Booklooker enables HTTP requests to be made to the Booklooker API. The
 
 ## 🎯 Project goals
 
-- [ ] Implementation of all models and handlers
+- [x] Implementation of all models and handlers
 - [x] Client with automatic token renewal
 - [x] Implementation of one example for each handler
-
-## 📜 User Guide
 
 ## ✅ Examples
 
