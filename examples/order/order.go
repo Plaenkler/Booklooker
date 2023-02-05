@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"log"
 
 	"github.com/plaenkler/booklooker/client"
@@ -20,10 +19,10 @@ func main() {
 
 	// Get orders for a specific date or time range
 	req := model.OrderRequest{
-		OrderID:  "123",        // Can only contain numbers
-		Date:     "2023-02-01", // Will override DateFrom and DateTo
-		DateFrom: "2023-02-01",
-		DateTo:   "2023-02-02",
+		Date: "2023-02-05", // Will override DateFrom and DateTo
+		// DateFrom: "2021-01-01",
+		// DateTo:   "2021-01-31",
+		// OrderID:  "123456789",
 	}
 
 	orderResp, err := handler.GetOrder(c.Token, req)
@@ -31,15 +30,6 @@ func main() {
 		log.Printf("error getting order: %v", err)
 		return
 	}
-	if orderResp.Status != "OK" {
-		log.Fatalf("error getting orders: %v", orderResp.ReturnValue)
-	}
-	var orders []model.Order
-	err = json.Unmarshal([]byte(orderResp.ReturnValue), &orders)
-	if err != nil {
-		log.Println("error unmarshalling orders:", err)
-	}
-	for _, order := range orders {
-		log.Println(order)
-	}
+	log.Printf("Status: %v", orderResp.Status)
+	log.Printf("Return: %+v", orderResp.ReturnValue)
 }

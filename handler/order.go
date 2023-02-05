@@ -11,7 +11,7 @@ import (
 	"github.com/plaenkler/booklooker/model"
 )
 
-func GetOrder(token model.Token, req model.OrderRequest) (*model.GlobalResponse, error) {
+func GetOrder(token model.Token, req model.OrderRequest) (*model.OrderResponse, error) {
 	if token.Value == "" {
 		return nil, fmt.Errorf("token has no value")
 	}
@@ -19,8 +19,8 @@ func GetOrder(token model.Token, req model.OrderRequest) (*model.GlobalResponse,
 		return nil, fmt.Errorf("token has expired")
 	}
 	params := url.Values{}
-	if req.OrderID == "" {
-		return nil, fmt.Errorf("orderId is not set")
+	if req.OrderID != "" {
+		params.Set("orderID", req.OrderID)
 	}
 	if req.Date != "" {
 		params.Set("date", req.Date)
@@ -42,7 +42,15 @@ func GetOrder(token model.Token, req model.OrderRequest) (*model.GlobalResponse,
 	if err != nil {
 		return nil, err
 	}
-	var orderResp model.GlobalResponse
+	var statusResp model.ErrorResponse
+	err = json.Unmarshal(jsonResp, &statusResp)
+	if err != nil {
+		return nil, err
+	}
+	if statusResp.Status != "OK" {
+		return nil, fmt.Errorf("NOK %v", statusResp.ReturnValue)
+	}
+	var orderResp model.OrderResponse
 	err = json.Unmarshal(jsonResp, &orderResp)
 	if err != nil {
 		return nil, err
