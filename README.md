@@ -2,6 +2,7 @@
 
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![Linters](https://github.com/Plaenkler/Booklooker/actions/workflows/linters.yml/badge.svg)](https://github.com/Plaenkler/Booklooker/actions/workflows/linters.yml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/Plaenkler/Booklooker.svg)](https://pkg.go.dev/github.com/Plaenkler/Booklooker)
 [![Support me](https://img.shields.io/badge/Support%20me%20%E2%98%95-orange.svg)](https://www.buymeacoffee.com/Plaenkler)
 
 Plaenkler/Booklooker enables HTTP requests to be made to the Booklooker API. The library abstracts the constructs and allows developers to interact with the Booklooker API through a convenient and intuitive interface.
