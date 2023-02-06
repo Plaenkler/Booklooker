@@ -8,8 +8,8 @@ Plaenkler/Booklooker enables HTTP requests to be made to the Booklooker API. The
 
 <table style="border:none;">
   <tr>
-    <td><img src="https://mvz-bietigheim.de/wp-content/uploads/2017/10/placeholder-image4.jpg" width="480"/></td>
-    <td><img src="https://mvz-bietigheim.de/wp-content/uploads/2017/10/placeholder-image4.jpg" width="480"/></td>
+    <td><img src="https://user-images.githubusercontent.com/60503970/217089943-53d1a509-6dd2-4fa0-85b4-380cc8a97530.png" width="480"/></td>
+    <td><img src="https://user-images.githubusercontent.com/60503970/217089956-f6949215-ca0c-44f5-a3f8-73b736d8832d.png" width="480"/></td>
   </tr>
 </table>
 
