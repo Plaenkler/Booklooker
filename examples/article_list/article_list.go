@@ -1,39 +1,34 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
-	"github.com/plaenkler/booklooker/api/handler"
-	"github.com/plaenkler/booklooker/api/models"
+	"github.com/plaenkler/booklooker/client"
+	"github.com/plaenkler/booklooker/handler"
+	"github.com/plaenkler/booklooker/model"
 )
 
 func main() {
-	// Authenticate to obtain a token
-	authReq := models.AuthenticateRequest{
-		APIKey: "your_api_key",
-	}
-	authResp, err := handler.Authenticate(authReq)
+	// Create a new client
+	c := client.Client{APIKey: "YOUR_API_KEY"}
+	err := c.Start()
 	if err != nil {
-		fmt.Println(err)
-		return
+		log.Fatalf("failed to start client: %v", err)
 	}
-	if authResp.Status != "success" {
-		fmt.Println(authResp.Message)
-		return
-	}
-	token := authResp.Token
+	defer c.Stop()
 
-	//
-	req := models.ArticleListRequest{
-		Field:     "title",
-		ShowPrice: true,
-		ShowStock: false,
+	// Download all active article numbers
+	req := model.ArticleListRequest{
+		ReturnType: "isbn", // Possible values: orderNo, ISBN or EAN
+		ShowPrice:  true,
+		ShowStock:  true,
+		MediaType:  model.Books, // Possible values: 0: Books, 1: Movies, 2: Music, 3: Audio books, 4: Games or n/a
 	}
 
-	resp, err := handler.GetArticleList(token, req)
+	articleListResp, err := handler.GetArticleList(c.Token, req)
 	if err != nil {
 		log.Fatalf("failed to get article list: %v", err)
 	}
-	fmt.Println("Article List:", resp.ArticleList)
+	log.Println("Status:", articleListResp.Status)
+	log.Println("Return:", articleListResp.ReturnValue)
 }

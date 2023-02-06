@@ -3,15 +3,17 @@ package main
 import (
 	"log"
 
-	"github.com/plaenkler/booklooker/api/handler"
-	"github.com/plaenkler/booklooker/api/models"
+	"github.com/plaenkler/booklooker/handler"
+	"github.com/plaenkler/booklooker/model"
 )
 
 func main() {
-	req := models.AuthenticateRequest{APIKey: "YOUR_API_KEY"}
+	// If you don't want to use the client, you can authenticate directly
+	req := model.AuthenticateRequest{APIKey: "YOUR_API_KEY"}
 	authResp, err := handler.Authenticate(req)
 	if err != nil {
-		log.Fatalf("Error authenticating: %v", err)
+		log.Fatalf("error authenticating: %v", err)
 	}
-	log.Println("Authentication response:", authResp)
+	log.Println("Status:", authResp.Status)
+	log.Println("Return:", authResp.ReturnValue)
 }

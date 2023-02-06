@@ -1,37 +1,31 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
-	"github.com/plaenkler/booklooker/api/handler"
-	"github.com/plaenkler/booklooker/api/models"
+	"github.com/plaenkler/booklooker/client"
+	"github.com/plaenkler/booklooker/handler"
+	"github.com/plaenkler/booklooker/model"
 )
 
 func main() {
-	// Authenticate to obtain a token
-	authReq := models.AuthenticateRequest{
-		APIKey: "your_api_key",
-	}
-	authResp, err := handler.Authenticate(authReq)
+	// Create a new client
+	c := client.Client{APIKey: "YOUR_API_KEY"}
+	err := c.Start()
 	if err != nil {
-		fmt.Println(err)
-		return
+		log.Fatalf("failed to start client: %v", err)
 	}
-	if authResp.Status != "success" {
-		fmt.Println(authResp.Message)
-		return
-	}
-	token := authResp.Token
+	defer c.Stop()
 
-	//
-	req := models.ArticleRequest{
-		OrderNo: "123",
+	// Delete an article
+	req := model.ArticleRequest{
+		OrderNo: "YOUR_ORDER_NUMBER",
 	}
 
-	resp, err := handler.DeleteArticle(token, req)
+	articleResp, err := handler.DeleteArticle(c.Token, req)
 	if err != nil {
 		log.Fatalf("failed to delete article: %v", err)
 	}
-	fmt.Println("Article Deletion Status:", resp.Status)
+	log.Println("Status:", articleResp.Status)
+	log.Println("Return:", articleResp.ReturnValue)
 }

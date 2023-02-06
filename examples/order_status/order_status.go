@@ -1,37 +1,32 @@
 package main
 
 import (
-	"fmt"
+	"log"
 
-	"github.com/plaenkler/booklooker/api/handler"
-	"github.com/plaenkler/booklooker/api/models"
+	"github.com/plaenkler/booklooker/client"
+	"github.com/plaenkler/booklooker/handler"
+	"github.com/plaenkler/booklooker/model"
 )
 
 func main() {
-	// Authenticate to obtain a token
-	authReq := models.AuthenticateRequest{
-		APIKey: "your_api_key",
-	}
-	authResp, err := handler.Authenticate(authReq)
+	// Create a new client
+	c := client.Client{APIKey: "YOUR_API_KEY"}
+	err := c.Start()
 	if err != nil {
-		fmt.Println(err)
-		return
+		log.Fatalf("failed to start client: %v", err)
 	}
-	if authResp.Status != "success" {
-		fmt.Println(authResp.Message)
-		return
-	}
-	token := authResp.Token
+	defer c.Stop()
 
 	// Set the order status
-	req := models.OrderStatusRequest{
+	req := model.OrderStatusRequest{
 		OrderID: "123",
-		Status:  "complete",
+		Status:  "CANCELED", // See possible return values in the documentation
 	}
-	resp, err := handler.SetOrderStatus(token, req)
+	orderStatusResp, err := handler.SetOrderStatus(c.Token, req)
 	if err != nil {
-		fmt.Println("Error:", err)
+		log.Println("Error:", err)
 		return
 	}
-	fmt.Println("Response:", resp)
+	log.Println("Status:", orderStatusResp.Status)
+	log.Println("Return:", orderStatusResp.ReturnValue)
 }

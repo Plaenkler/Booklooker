@@ -1,40 +1,36 @@
 package main
 
 import (
-	"fmt"
+	"log"
 
-	"github.com/plaenkler/booklooker/api/handler"
-	"github.com/plaenkler/booklooker/api/models"
+	"github.com/plaenkler/booklooker/client"
+	"github.com/plaenkler/booklooker/handler"
+	"github.com/plaenkler/booklooker/model"
 )
 
 func main() {
-	// Authenticate to obtain a token
-	authReq := models.AuthenticateRequest{
-		APIKey: "your_api_key",
-	}
-	authResp, err := handler.Authenticate(authReq)
+	// Create a new client
+	c := client.Client{APIKey: "YOUR_API_KEY"}
+	err := c.Start()
 	if err != nil {
-		fmt.Println(err)
-		return
+		log.Fatalf("failed to start client: %v", err)
 	}
-	if authResp.Status != "success" {
-		fmt.Println(authResp.Message)
-		return
-	}
-	token := authResp.Token
+	defer c.Stop()
 
 	// Cancel an order item
-	req := &models.OrderItemCancelRequest{
-		OrderItemId: "order_item_id",
-		MediaType:   1,
+	req := model.OrderItemCancelRequest{
+		OrderItemID: "123",       // Can only contain numbers
+		MediaType:   model.Books, // Possible values: 0: Books, 1: Movies, 2: Music, 3: Audio books, 4: Games
 	}
-	orderItemCancelResp, err := handler.PutOrderItemCancel(token, req)
+	orderItemCancelResp, err := handler.PutOrderItemCancel(c.Token, req)
 	if err != nil {
-		fmt.Println("Error:", err)
+		log.Println("Error:", err)
 		return
 	}
-	if orderItemCancelResp.Status != "success" {
-		fmt.Println(orderItemCancelResp.Message)
+	if orderItemCancelResp.Status != "OK" {
+		log.Println(orderItemCancelResp.ReturnValue)
 		return
 	}
+	log.Println("Status:", orderItemCancelResp.Status)
+	log.Println("Return:", orderItemCancelResp.ReturnValue)
 }

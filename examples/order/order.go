@@ -1,41 +1,35 @@
 package main
 
 import (
-	"fmt"
+	"log"
 
-	"github.com/plaenkler/booklooker/api/handler"
-	"github.com/plaenkler/booklooker/api/models"
+	"github.com/plaenkler/booklooker/client"
+	"github.com/plaenkler/booklooker/handler"
+	"github.com/plaenkler/booklooker/model"
 )
 
 func main() {
-	// Authenticate to obtain a token
-	authReq := models.AuthenticateRequest{
-		APIKey: "your_api_key",
-	}
-	authResp, err := handler.Authenticate(authReq)
+	// Create a new client
+	c := client.Client{APIKey: "YOUR_API_KEY"}
+	err := c.Start()
 	if err != nil {
-		fmt.Println(err)
-		return
+		log.Fatalf("failed to start client: %v", err)
 	}
-	if authResp.Status != "success" {
-		fmt.Println(authResp.Message)
-		return
-	}
-	token := authResp.Token
+	defer c.Stop()
 
 	// Get orders for a specific date or time range
-	req := models.OrderRequest{
-		OrderID:  "123",
-		Date:     "2022-12-31",
-		DateFrom: "",
-		DateTo:   "",
+	req := model.OrderRequest{
+		Date: "2023-02-05", // Will override DateFrom and DateTo
+		// DateFrom: "2021-01-01",
+		// DateTo:   "2021-01-31",
+		// OrderID:  "123456789",
 	}
 
-	orderResp, err := handler.GetOrder(token, req)
+	orderResp, err := handler.GetOrder(c.Token, req)
 	if err != nil {
-		fmt.Println("Error getting order:", err)
+		log.Printf("error getting order: %v", err)
 		return
 	}
-
-	fmt.Println("Order response:", orderResp)
+	log.Printf("Status: %v", orderResp.Status)
+	log.Printf("Return: %+v", orderResp.ReturnValue)
 }
