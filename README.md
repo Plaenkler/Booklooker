@@ -5,7 +5,7 @@
 [![Go Reference](https://pkg.go.dev/badge/github.com/Plaenkler/Booklooker.svg)](https://pkg.go.dev/github.com/Plaenkler/Booklooker)
 [![Support me](https://img.shields.io/badge/Support%20me%20%E2%98%95-orange.svg)](https://www.buymeacoffee.com/Plaenkler)
 
-Plaenkler/Booklooker enables HTTP requests to be made to the Booklooker API. The library abstracts the constructs and allows developers to interact with the Booklooker API through a convenient and intuitive interface.
+Plaenkler/Booklooker enables HTTP requests to be made to the [Booklooker API](https://www.booklooker.de/pages/rest_api.php). The library abstracts the constructs and allows developers to interact with the Booklooker API through a convenient and intuitive interface.
 
 <table style="border:none;">
   <tr>
