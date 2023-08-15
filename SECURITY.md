@@ -3,7 +3,7 @@
 ## Supported Versions
 
 I am dedicated to ensure the security of Booklooker. To achieve this, I follow the Semantic Versioning (SemVer) scheme, where revisions are in the format "major.minor.patch".
-I will release patches for any security vulnerabilities that are discovered in the latest major or minor release. 
+I will release patches for any security vulnerabilities that are discovered in the latest major or minor release.
 
 | Version | Supported          |
 | ------- | ------------------ |
@@ -39,7 +39,7 @@ If the vulnerability is declined:
 
 ## Security Updates
 
-To ensure the security of Booklooker, it is crucial that all users update to the latest supported version promptly. 
+To ensure the security of Booklooker, it is crucial that all users update to the latest supported version promptly.
 Users of older versions that are no longer supported are strongly recommended to upgrade to a supported version to stay protected against potential security threats.
 
 Thank you for helping me make Booklooker more secure. Your cooperation and responsible disclosure are essential to maintaining the integrity and trustworthiness of this project.
