@@ -2,18 +2,21 @@
 
 ## Supported Versions
 
-Only the latest version is supported. Explanatory diagram:
+I am dedicated to ensure the security of Booklooker. To achieve this, I follow the Semantic Versioning (SemVer) scheme, where revisions are in the format "major.minor.patch".
+I will release patches for any security vulnerabilities that are discovered in the latest major or minor release.
 
-| Version      | Supported          |
-| ------------ | ------------------ |
-| 1.0.0        | :white_check_mark: |
-| Older        | :x:                |
+| Version | Supported          |
+| ------- | ------------------ |
+| 1.2.x   | :white_check_mark: |
+| 1.1.x   | :x:                |
+| 1.0.x   | :white_check_mark: |
+| < 1.0   | :x:                |
 
 ## Reporting a Vulnerability
 
-To report a vulnerability, please follow these steps:
+I take the security of this project very seriously. If you discover a security vulnerability, I appreciate your responsible disclosure. To report a vulnerability, please follow these steps:
 
-1. **Email**: Send an email to [info@plaenker.com](mailto:info@plaenker.com) with all the details regarding the vulnerability.
+1. **Email**: Send an email to [info@plaenkler.com](mailto:info@plaenkler.com) with all the details regarding the vulnerability.
 2. **Subject**: Use "[Booklooker Vulnerability Report]" as the subject line to help me prioritize and identify your report.
 3. **Vulnerability Details**: Please provide a clear and detailed description of the vulnerability, along with the potential impact it may have.
 4. **Reproducibility**: If possible, include step-by-step instructions to reproduce the vulnerability.
@@ -36,10 +39,11 @@ If the vulnerability is declined:
 
 ## Security Updates
 
-To ensure the security of Booklooker, it is crucial that all users update to the latest supported version promptly. Users of older versions that are no longer supported are strongly recommended to upgrade to a supported version to stay protected against potential security threats.
+To ensure the security of Booklooker, it is crucial that all users update to the latest supported version promptly.
+Users of older versions that are no longer supported are strongly recommended to upgrade to a supported version to stay protected against potential security threats.
 
 Thank you for helping me make Booklooker more secure. Your cooperation and responsible disclosure are essential to maintaining the integrity and trustworthiness of this project.
 
 Please note that this security policy is subject to change over time, so it is advisable to check this document periodically for any updates.
 
-Last Updated: August 14, 2023.
+Last Updated: August 15, 2023.
