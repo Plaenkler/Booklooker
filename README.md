@@ -9,8 +9,8 @@ Plaenkler/Booklooker enables HTTP requests to be made to the [Booklooker API](ht
 
 <table style="border:none;">
   <tr>
-    <td><img src="https://user-images.githubusercontent.com/60503970/217090657-d8d08ec3-fe4b-45ec-ab10-d48f767c4695.png" width="480"/></td>
-    <td><img src="https://user-images.githubusercontent.com/60503970/217090678-891a25b7-0b06-41fe-bbf5-f3933f81bef5.png" width="480"/></td>
+    <td><img src="https://user-images.githubusercontent.com/60503970/217090657-d8d08ec3-fe4b-45ec-ab10-d48f767c4695.png" alt="delete article example" width="480"/></td>
+    <td><img src="https://user-images.githubusercontent.com/60503970/217090678-891a25b7-0b06-41fe-bbf5-f3933f81bef5.png" alt="import file example" width="480"/></td>
   </tr>
 </table>
 
