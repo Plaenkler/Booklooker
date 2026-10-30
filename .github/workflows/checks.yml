@@ -10,8 +10,30 @@ on:
 
 permissions:
   contents: read
+  packages: read
+  statuses: write
 
 jobs:
+  super-linter:
+    name: Lint Multiple
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Lint Code Base
+        uses: super-linter/super-linter/slim@2da136927bd4a73596db63044b504547c62cb854 # v9.0.0
+        env:
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_ALL_CODEBASE: true
+          VALIDATE_JSCPD: false
+          VALIDATE_GO: false
+          VALIDATE_GO_MODULES: false
+          VALIDATE_MARKDOWN_PRETTIER: false
+          VALIDATE_YAML_PRETTIER: false
+          VALIDATE_GITHUB_ACTIONS_ZIZMOR: false
   golangci-lint:
     name: Lint Golang
     runs-on: ubuntu-latest

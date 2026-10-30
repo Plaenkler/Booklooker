@@ -7,7 +7,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/plaenkler/booklooker"
+	"github.com/plaenkler/booklooker/v2"
 )
 
 func ExampleClient_ImportFile() {

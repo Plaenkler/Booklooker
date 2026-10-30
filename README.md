@@ -4,14 +4,14 @@
 
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![Checks](https://github.com/Plaenkler/Booklooker/actions/workflows/checks.yml/badge.svg)](https://github.com/Plaenkler/Booklooker/actions/workflows/checks.yml)
-[![Go Reference](https://pkg.go.dev/badge/github.com/plaenkler/booklooker.svg)](https://pkg.go.dev/github.com/plaenkler/booklooker)
+[![Go Reference](https://pkg.go.dev/badge/github.com/plaenkler/booklooker/v2.svg)](https://pkg.go.dev/github.com/plaenkler/booklooker/v2)
 
 Go client for the [Booklooker REST API 2.0](https://www.booklooker.de/pages/rest_api.php), based on its [OpenAPI specification](https://www.booklooker.de/download/openapi.yaml). It uses only the standard library.
 
 ## Installation
 
 ```text
-go get github.com/plaenkler/booklooker
+go get github.com/plaenkler/booklooker/v2
 ```
 
 ## Usage
@@ -34,27 +34,30 @@ The API key is shown in the [personal data](https://www.booklooker.de/app/priv/a
 
 ## Interfaces
 
-| Interface           | Method                                         | Result                                      |
-| ------------------- | ---------------------------------------------- | ------------------------------------------- |
-| `account`           | `Account(mediaType)`                           | Seller account and its readiness to sell    |
-| `article`           | `DeleteArticle(orderNo)`                       | Deletion within 2 hours                     |
-| `article_list`      | `ArticleList(options)`                         | One line per active article                 |
-| `article_status`    | `ArticleStatus(orderNo)`                       | `ACTIVE`, `SOLD` or `DELETED`               |
-| `search`            | `Search(params)`                               | Undocumented result as raw JSON             |
-| `file_import`       | `ImportFile(upload)`                           | Upload of an article or image file          |
-| `file_status`       | `FileStatus(filename)`, `FileErrors(filename)` | Processing status or rejected articles      |
-| `import_status`     | `ImportStatus()`                               | Number of unprocessed files                 |
-| `image`             | `DeleteImage(orderNo, position)`, `DeleteImages(orderNo)` | Deletion of one or all images    |
-| `order`             | `Orders(date)`, `OrdersBetween(from, to)`, `Order(orderID)` | Orders of a day, at most one month or one order |
-| `order_cancel`      | `CancelOrder(orderID)`                         | Cancellation without commission             |
-| `order_item_cancel` | `CancelOrderItem(orderItemID, mediaType)`      | Cancellation of one article                 |
-| `order_message`     | `SendOrderMessage(orderID, type, text)`        | Text of the sent mail                       |
-| `order_rating`      | `RateOrder(orderID, rating, comment)`          | Rating of the customer                      |
-| `order_status`      | `SetOrderStatus(orderID, status)`              | Status for the own organization             |
-| `purchase`          | `Purchase(purchase)`                           | Orders per seller and unknown articles      |
+| Interface           | Methods                                                     |
+| ------------------- | ----------------------------------------------------------- |
+| `account`           | `Account(mediaType)`                                        |
+| `article`           | `DeleteArticle(orderNo)`                                    |
+| `article_list`      | `ArticleList(options)`                                      |
+| `article_status`    | `ArticleStatus(orderNo)`                                    |
+| `search`            | `Search(params)`                                            |
+| `file_import`       | `ImportFile(upload)`                                        |
+| `file_status`       | `FileStatus(filename)`, `FileErrors(filename)`              |
+| `import_status`     | `ImportStatus()`                                            |
+| `image`             | `DeleteImage(orderNo, position)`, `DeleteImages(orderNo)`   |
+| `order`             | `Orders(date)`, `OrdersBetween(from, to)`, `Order(orderID)` |
+| `order_cancel`      | `CancelOrder(orderID)`                                      |
+| `order_item_cancel` | `CancelOrderItem(orderItemID, mediaType)`                   |
+| `order_message`     | `SendOrderMessage(orderID, messageType, additionalText)`    |
+| `order_rating`      | `RateOrder(orderID, rating, comment)`                       |
+| `order_status`      | `SetOrderStatus(orderID, status)`                           |
+| `purchase`          | `Purchase(purchase)`                                        |
 
-- `purchase` has to be enabled by Booklooker via daten@booklooker.de. It only fails if Booklooker did not process the call, each order of the result has a status of its own.
+- `DeleteArticle` only marks the article, Booklooker deletes it within 2 hours. `ArticleList` still contains it meanwhile, `ArticleStatus` is current.
+- `Search` returns the result as raw JSON, Booklooker documents neither its parameters nor its result.
+- `OrdersBetween` covers at most one month.
 - `SetOrderStatus` with `Canceled` only organizes the orders, cancellations without commission need `CancelOrder` or `CancelOrderItem`.
+- `purchase` has to be enabled by Booklooker via daten@booklooker.de. It only fails if Booklooker did not process the call, each order of the result has a status of its own.
 - Amounts of orders are decimal numbers as text, e.g. `"12.50"`, as Booklooker returns them.
 
 ## Example
@@ -83,3 +86,14 @@ golangci-lint run
 ```
 
 The tests run against a local test server and need no API key.
+
+### Releases
+
+Versions follow [Semantic Versioning](https://semver.org) as Git tags like `v2.1.0`, Go reads them directly from the repository.
+A breaking change needs a new major version, whose module path ends with it, e.g. `github.com/plaenkler/booklooker/v3`.
+
+| Workflow                                     | Trigger               | Steps                              |
+| -------------------------------------------- | --------------------- | ---------------------------------- |
+| [`checks.yml`](.github/workflows/checks.yml) | push and pull request | Super-Linter, golangci-lint, tests |
+
+Dependabot updates Go and Actions dependencies weekly in one grouped pull request.
