@@ -32,34 +32,6 @@ The API key is shown in the [personal data](https://www.booklooker.de/app/priv/a
 - `BaseURL` and `HTTPClient` of the client can be replaced, the default timeout is 5 minutes because uploads may have 80 MB.
 - The client is safe for concurrent use and works without `context`.
 
-## Interfaces
-
-| Interface           | Methods                                                     |
-| ------------------- | ----------------------------------------------------------- |
-| `account`           | `Account(mediaType)`                                        |
-| `article`           | `DeleteArticle(orderNo)`                                    |
-| `article_list`      | `ArticleList(options)`                                      |
-| `article_status`    | `ArticleStatus(orderNo)`                                    |
-| `search`            | `Search(params)`                                            |
-| `file_import`       | `ImportFile(upload)`                                        |
-| `file_status`       | `FileStatus(filename)`, `FileErrors(filename)`              |
-| `import_status`     | `ImportStatus()`                                            |
-| `image`             | `DeleteImage(orderNo, position)`, `DeleteImages(orderNo)`   |
-| `order`             | `Orders(date)`, `OrdersBetween(from, to)`, `Order(orderID)` |
-| `order_cancel`      | `CancelOrder(orderID)`                                      |
-| `order_item_cancel` | `CancelOrderItem(orderItemID, mediaType)`                   |
-| `order_message`     | `SendOrderMessage(orderID, messageType, additionalText)`    |
-| `order_rating`      | `RateOrder(orderID, rating, comment)`                       |
-| `order_status`      | `SetOrderStatus(orderID, status)`                           |
-| `purchase`          | `Purchase(purchase)`                                        |
-
-- `DeleteArticle` only marks the article, Booklooker deletes it within 2 hours. `ArticleList` still contains it meanwhile, `ArticleStatus` is current.
-- `Search` returns the result as raw JSON, Booklooker documents neither its parameters nor its result.
-- `OrdersBetween` covers at most one month.
-- `SetOrderStatus` with `Canceled` only organizes the orders, cancellations without commission need `CancelOrder` or `CancelOrderItem`.
-- `purchase` has to be enabled by Booklooker via daten@booklooker.de. It only fails if Booklooker did not process the call, each order of the result has a status of its own.
-- Amounts of orders are decimal numbers as text, e.g. `"12.50"`, as Booklooker returns them.
-
 ## Example
 
 ```go
@@ -77,23 +49,3 @@ err = client.ImportFile(booklooker.Upload{
 ```
 
 More examples are in [`example_test.go`](example_test.go).
-
-## Development
-
-```text
-go test ./...
-golangci-lint run
-```
-
-The tests run against a local test server and need no API key.
-
-### Releases
-
-Versions follow [Semantic Versioning](https://semver.org) as Git tags like `v2.1.0`, Go reads them directly from the repository.
-A breaking change needs a new major version, whose module path ends with it, e.g. `github.com/plaenkler/booklooker/v3`.
-
-| Workflow                                     | Trigger               | Steps                              |
-| -------------------------------------------- | --------------------- | ---------------------------------- |
-| [`checks.yml`](.github/workflows/checks.yml) | push and pull request | Super-Linter, golangci-lint, tests |
-
-Dependabot updates Go and Actions dependencies weekly in one grouped pull request.
