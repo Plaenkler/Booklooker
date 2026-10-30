@@ -20,7 +20,7 @@ go get github.com/plaenkler/booklooker/v2
 client := booklooker.New(os.Getenv("BOOKLOOKER_API_KEY"))
 status, err := client.ArticleStatus("HIS0067")
 if err != nil {
-	log.Fatal(err)
+    log.Fatal(err)
 }
 log.Print(status) // ACTIVE, SOLD or DELETED
 ```
@@ -37,14 +37,14 @@ The API key is shown in the [personal data](https://www.booklooker.de/app/priv/a
 ```go
 content, err := os.ReadFile("books.txt")
 if err != nil {
-	log.Fatal(err)
+    log.Fatal(err)
 }
 err = client.ImportFile(booklooker.Upload{
-	Name:     "books.txt",
-	Content:  bytes.NewReader(content),
-	DataType: booklooker.DataReplace,
-	FormatID: 1, // Booklooker format
-	Encoding: booklooker.UTF8,
+    Name:     "books.txt",
+    Content:  bytes.NewReader(content),
+    DataType: booklooker.DataReplace,
+    FormatID: 1, // Booklooker format
+    Encoding: booklooker.UTF8,
 })
 ```
 

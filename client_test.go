@@ -162,7 +162,7 @@ func TestImportFile(t *testing.T) {
 				return
 			}
 			content, _ := io.ReadAll(file)
-			if header.Filename != "books.txt" || string(content) != "Titel\tPreis\n" {
+			if header.Filename != "books.txt" || string(content) != "Title\tPrice\n" {
 				reply(w, "NOK", `"UPLOAD_FAILED"`)
 				return
 			}
@@ -171,7 +171,7 @@ func TestImportFile(t *testing.T) {
 	})
 	err := client.ImportFile(Upload{
 		Name:     "books.txt",
-		Content:  strings.NewReader("Titel\tPreis\n"),
+		Content:  strings.NewReader("Title\tPrice\n"),
 		FileType: ArticleFile,
 		DataType: DataReplace,
 		FormatID: 1,
