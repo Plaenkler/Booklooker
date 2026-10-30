@@ -1,0 +1,54 @@
+---
+
+version: "2"
+run:
+  timeout: 5m
+
+linters:
+  default: all
+  disable:
+    - cyclop
+    - exhaustive
+    - exhaustruct
+    - exhaustruct_v5
+    - forbidigo
+    - funlen
+    - gochecknoglobals
+    - godot
+    - err113
+    - lll
+    - nakedret
+    - nestif
+    - godox
+    - dupl
+    - goconst
+    - nilerr
+    - ireturn
+    - depguard
+    - mnd
+    - gomodguard
+    - gomodguard_v2
+    - gochecknoinits
+    - nlreturn
+    - revive
+    - varnamelen
+    - tagliatelle
+    - tagalign
+    - wsl_v5
+    - wsl
+    - wrapcheck
+    - errorlint
+    # The client deliberately works without context.
+    - contextcheck
+    - noctx
+    # The suggested replacements are iterators, generics and the slices package.
+    - modernize
+    - paralleltest
+    - testpackage
+    # The examples need an API key and have no output to check.
+    - testableexamples
+  settings:
+    errcheck:
+      # Closing a reader cannot lose data.
+      exclude-functions:
+        - (io.ReadCloser).Close

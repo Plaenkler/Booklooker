@@ -3,14 +3,12 @@
 ## Supported Versions
 
 I am dedicated to ensure the security of Booklooker. To achieve this, I follow the Semantic Versioning (SemVer) scheme, where revisions are in the format "major.minor.patch".
-I will release patches for any security vulnerabilities that are discovered in the latest major or minor release.
+I will only release patches for the latest minor release of the latest major version.
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 1.2.x   | :white_check_mark: |
-| 1.1.x   | :x:                |
-| 1.0.x   | :white_check_mark: |
-| < 1.0   | :x:                |
+| 2.0.x   | :white_check_mark: |
+| 1.x     | :x:                |
 
 ## Reporting a Vulnerability
 
@@ -46,4 +44,4 @@ Thank you for helping me make Booklooker more secure. Your cooperation and respo
 
 Please note that this security policy is subject to change over time, so it is advisable to check this document periodically for any updates.
 
-Last Updated: August 15, 2023.
+Last Updated: October 30, 2026.
