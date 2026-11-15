@@ -25,13 +25,6 @@ if err != nil {
 log.Print(status) // ACTIVE, SOLD or DELETED
 ```
 
-The API key is shown in the [personal data](https://www.booklooker.de/app/priv/api_key.php) of the Booklooker account.
-
-- The client authenticates on the first call. Booklooker drops a token after 10 minutes without a call, the client gets a new one after 9 minutes or when Booklooker reports it expired.
-- A response with the status `NOK` is returned as `*booklooker.Error`, its `Code` is the value of Booklooker, e.g. `NOT_FOUND` or `QUOTA_EXCEEDED`.
-- `BaseURL` and `HTTPClient` of the client can be replaced, the default timeout is 5 minutes because uploads may have 80 MB.
-- The client is safe for concurrent use and works without `context`.
-
 ## Example
 
 ```go
