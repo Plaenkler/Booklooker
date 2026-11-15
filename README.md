@@ -1,6 +1,6 @@
 # Booklooker
 
-> This project was built before AI was a thing for me. The current version is a rewrite by Claude Opus 5.5 in Claude Code, based on the OpenAPI specification. Whether that is a mark of quality or the opposite is up to you.
+> This project is a rewrite by Claude Opus 5.5 in Claude Code, based on the OpenAPI specification. Whether that is a mark of quality or the opposite is up to you.
 
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![Checks](https://github.com/Plaenkler/Booklooker/actions/workflows/checks.yml/badge.svg)](https://github.com/Plaenkler/Booklooker/actions/workflows/checks.yml)
