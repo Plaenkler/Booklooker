@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
 )
@@ -25,15 +26,30 @@ type Client struct {
 	APIKey     string
 	BaseURL    string
 	HTTPClient *http.Client
-	mutex      sync.Mutex
-	token      string
-	used       time.Time
+	// Interval is the shortest time between two requests. Booklooker limits the requests per minute without naming
+	// the number and answers QUOTA_EXCEEDED, zero sends every request at once.
+	Interval  time.Duration
+	mutex     sync.Mutex
+	token     string
+	used      time.Time
+	paceMutex sync.Mutex
+	last      time.Time
 }
 
-// Error is a response with the status NOK, Code is the returned value like NOT_FOUND.
+// Error is a response with the status NOK, Code is the returned value like NOT_FOUND. Fields names the rejected
+// fields of an article, Missing what the account lacks to sell, e.g. TAX_DATA_MISSING.
 type Error struct {
 	Interface string
 	Code      string
+	Fields    []FieldError
+	Missing   []string
+}
+
+// FieldError is a rejected field like price with a code like MISSING, Position counts the images from 1.
+type FieldError struct {
+	Field    string `json:"field"`
+	Code     string `json:"code"`
+	Position int    `json:"position"`
 }
 
 type request struct {
@@ -47,6 +63,8 @@ type request struct {
 type response struct {
 	Status      string          `json:"status"`
 	ReturnValue json.RawMessage `json:"returnValue"`
+	Errors      []FieldError    `json:"errors"`
+	Missing     []string        `json:"missing"`
 }
 
 func New(apiKey string) *Client {
@@ -59,7 +77,15 @@ func New(apiKey string) *Client {
 }
 
 func (e *Error) Error() string {
-	return "booklooker: " + e.Interface + ": " + e.Code
+	var text strings.Builder
+	text.WriteString("booklooker: " + e.Interface + ": " + e.Code)
+	for _, field := range e.Fields {
+		text.WriteString(", " + field.Field + " " + field.Code)
+	}
+	for _, missing := range e.Missing {
+		text.WriteString(", " + missing)
+	}
+	return text.String()
 }
 
 // Account returns the seller account of the API key and whether it can sell the media type.
@@ -139,6 +165,7 @@ func (c *Client) reset() {
 }
 
 func (c *Client) do(r request) (json.RawMessage, error) {
+	c.wait()
 	httpRequest, err := http.NewRequest(r.method, c.BaseURL+"/"+r.path+"?"+r.params.Encode(), bytes.NewReader(r.body))
 	if err != nil {
 		return nil, err
@@ -164,9 +191,20 @@ func (c *Client) do(r request) (json.RawMessage, error) {
 		return nil, fmt.Errorf("booklooker: %s: %w", r.path, err)
 	}
 	if result.Status != "OK" {
-		return nil, &Error{Interface: r.path, Code: errorCode(result.ReturnValue)}
+		return nil, &Error{Interface: r.path, Code: errorCode(result.ReturnValue), Fields: result.Errors, Missing: result.Missing}
 	}
 	return result.ReturnValue, nil
+}
+
+// wait keeps Interval between two requests, also between those of several goroutines.
+func (c *Client) wait() {
+	c.paceMutex.Lock()
+	defer c.paceMutex.Unlock()
+	pause := c.Interval - time.Since(c.last)
+	if pause > 0 {
+		time.Sleep(pause)
+	}
+	c.last = time.Now()
 }
 
 func errorCode(value json.RawMessage) string {

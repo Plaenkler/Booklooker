@@ -51,9 +51,35 @@ const (
 type ArticleStatus string
 
 const (
-	ArticleActive  ArticleStatus = "ACTIVE"
+	ArticleActive ArticleStatus = "ACTIVE"
+	// ArticlePending is a new or changed article that the next update run activates, until then a changed one shows
+	// its old version.
+	ArticlePending ArticleStatus = "PENDING"
 	ArticleSold    ArticleStatus = "SOLD"
 	ArticleDeleted ArticleStatus = "DELETED"
+)
+
+// Condition is the state of an article, Booklooker allows new books only to commercial sellers.
+type Condition int
+
+const (
+	ConditionNew       Condition = 0
+	ConditionLikeNew   Condition = 1
+	ConditionLightWear Condition = 2
+	ConditionHeavyWear Condition = 3
+	ConditionWornOut   Condition = 4
+)
+
+// ValueField names a select field of an article whose values ValueList returns.
+type ValueField string
+
+const (
+	ValueCategory      ValueField = "category"
+	ValueLanguage      ValueField = "language"
+	ValueMedium        ValueField = "medium"
+	ValueAudio         ValueField = "audio"
+	ValueAudiobookType ValueField = "audiobookType"
+	ValueGameType      ValueField = "gameType"
 )
 
 type FileStatus string
